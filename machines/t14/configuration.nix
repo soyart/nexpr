@@ -9,7 +9,7 @@
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
       ./mine/iwd.nix
-      ./mine/user-artnoi.nix
+      ./mine/main-user.nix
     ];
 
   # Use the systemd-boot EFI boot loader.
@@ -140,5 +140,8 @@
     nil # nix LSP
     helix
   ];
+
+  main-user.enable = true;
+  main-user.userName = "artnoi";
 }
 
