@@ -8,6 +8,8 @@
   imports =
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
+      ./mine/iwd.nix
+      ./mine/user-artnoi.nix
     ];
 
   # Use the systemd-boot EFI boot loader.
@@ -120,30 +122,12 @@
   boot.kernelPackages = pkgs.linuxPackages_latest;
   boot.initrd.luks.devices = {
     crypted = {
-      # /dev/nvme0n1p8: UUID="31e319df-c4fe-48f5-82f5-49c7a5503119" TYPE="crypto_LUKS" PARTUUID="470c5a92-3d45-4cc4-9dd7-cf79ffd0369b"
       device = "/dev/disk/by-uuid/31e319df-c4fe-48f5-82f5-49c7a5503119";
       preLVM = true;
       allowDiscards = true; 
     };   
   };
 
-  networking.wireless.iwd = {
-    enable = true;
-    settings = {
-      Settings = {
-        AutoConnect = true;
-      };
-    };
-  };
-
-  users.users.artnoi = {
-    isNormalUser = true;
-    home = "/home/artnoi";
-    createHome = true;
-    extraGroups = [
-      "wheel"
-    ];
-  };
 
   environment.systemPackages = with pkgs; [
     tmux
