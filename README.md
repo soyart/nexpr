@@ -59,7 +59,7 @@ all modules being linked to `/etc/nixos/modules`:
 # nixos-public
 # ./stow.sh;
 
-modules             -> /etc/nixos/modules
+modules
 ├── wifi.nix        -> /etc/nixos/modules/wifi.nix
 └── laptop-lid.nix  -> /etc/nixos/modules/laptop-lid.nix
 
@@ -80,7 +80,7 @@ But if we re-run with `./stow.sh laptop`, then:
 # nixos-public
 # ./stow.sh laptop;
 
-modules             -> /etc/nixos/modules
+modules
 ├── wifi.nix        -> /etc/nixos/modules/wifi.nix
 └── laptop-lid.nix  -> /etc/nixos/modules/laptop-lid.nix
 
