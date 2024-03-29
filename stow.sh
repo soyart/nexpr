@@ -1,6 +1,20 @@
 #!/usr/bin/env bash
 
-NIXMOD="/etc/nixos/modules";
+halp() {
+  echo "stow.sh [HOST]";
+  echo "Stows modules to /etc/nixos/modules, and hosts/<HOST> to /etc/nixos if given";
+  exit 0;
+}
+
+case "$1" in
+  "-h") halp ;;
+  "help") halp ;;
+  "--help") halp ;;
+esac;
+
+HOST="$1";
+NIXOS_ROOT="/etc/nixos"
+NIXOS_MODS="/etc/nixos/modules";
 
 die() {
   local msg="$1";
@@ -30,7 +44,6 @@ stow_src_dst() {
 
   if stow_test "$src" "$dst"; then
     sudo stow -t "$dst" "$src"\
-      && echo "stowed $dst: $src"\
       || die "stow_pkg_to: failed to stow $src";
     
 
@@ -40,17 +53,29 @@ stow_src_dst() {
 }
 
 stow_modules() {
-  test -d "${NIXMOD}" || die "stow_modules: NIXMOD is not a directory: '${NIXMOD}'";
-  stow_src_dst "modules" "$NIXMOD";
+  test -d "${NIXOS_MODS}" || die "stow_modules: NIXOS_MODS is not a directory: '${NIXOS_MODS}'";
+  stow_src_dst "modules" "$NIXOS_MODS";
+
+  echo "stow_modules: done"
+}
+
+stow_host() {
+  pushd "hosts" > /dev/null 2>&1;
+  stow_src_dst "${HOST}" "$NIXOS_ROOT";
+  popd > /dev/null 2>&1;
+
+  echo "stow_host: done: ${HOST}"
 }
 
 main() {
-  if ! [ -d "${NIXMOD}" ]; then
-    echo "Creating ${NIXMOD}";
-    sudo mkdir -p "${NIXMOD}";
+  if ! [ -d "${NIXOS_MODS}" ]; then
+    echo "Creating ${NIXOS_MODS}";
+    sudo mkdir -p "${NIXOS_MODS}";
   fi;
 
   stow_modules;
+
+  test -n "${HOST}" && stow_host
 }
 
 main;
