@@ -132,6 +132,8 @@
   environment.systemPackages = with pkgs; [
     tmux
     htop
+    stow
+    tree
     openssh
     ripgrep
     wireguard-tools
