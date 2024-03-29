@@ -7,9 +7,9 @@
 {
   imports =
     [
-      ./hardware-configuration.nix
-      ./modules/iwd.nix
-      ./modules/main-user.nix
+      /etc/nixos/hardware-configuration.nix
+      /etc/nixos/modules/iwd.nix
+      /etc/nixos/modules/main-user.nix
     ];
 
   # Use the systemd-boot EFI boot loader.
