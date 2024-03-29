@@ -6,10 +6,10 @@
 
 {
   imports =
-    [ # Include the results of the hardware scan.
+    [
       ./hardware-configuration.nix
-      ./mine/iwd.nix
-      ./mine/main-user.nix
+      ./modules/iwd.nix
+      ./modules/main-user.nix
     ];
 
   # Use the systemd-boot EFI boot loader.
