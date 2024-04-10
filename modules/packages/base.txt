@@ -1,0 +1,8 @@
+lf
+bat
+tmux
+htop
+stow
+tree
+openssh
+ripgrep
