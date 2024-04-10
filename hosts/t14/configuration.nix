@@ -2,11 +2,17 @@
 # your system. Help is available in the configuration.nix(5) man page, on
 # https://search.nixos.org/options and in the NixOS manual (`nixos-help`).
 
-{ config, lib, pkgs, ... }:
+{ lib, pkgs, ... }:
 
 let
-  txtimport = import /etc/nixos/modules/packages/txtimport.nix { inherit pkgs lib; };
   mainUsername = "artnoi";
+
+  txtPackage = import /etc/nixos/modules/packages/txtimport.nix { inherit pkgs lib; };
+  myPackages = txtPackage /etc/nixos/modules/packages/base.txt
+  ++ txtPackage /etc/nixos/modules/packages/devel.txt
+  ++ txtPackage /etc/nixos/modules/packages/net.txt
+  ++ txtPackage /etc/nixos/modules/packages/laptop.txt;
+
 in
 {
   imports =
@@ -53,11 +59,8 @@ in
 
 
   environment.systemPackages = [
-    # other packages go here
-  ]
-  ++ txtimport /etc/nixos/modules/packages/base.txt
-  ++ txtimport /etc/nixos/modules/packages/devel.txt
-  ++ txtimport /etc/nixos/modules/packages/net.txt;
+    # Other packages go here
+  ] ++ myPackages;
 
   main-user.enable = true;
   main-user.userName = mainUsername;
