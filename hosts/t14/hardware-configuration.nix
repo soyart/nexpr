@@ -36,6 +36,20 @@
       fsType = "vfat";
     };
 
+  fileSystems."/tmp" =
+    {
+      device = "none";
+      fsType = "tmpfs";
+      options = ["defaults" "mode=755"];
+    };
+
+  fileSystems."/rd" =
+    {
+      device = "none";
+      fsType = "tmpfs";
+      options = ["defaults" "mode=755" "size=2G"];
+    };
+
   swapDevices =
     [ { device = "/dev/disk/by-uuid/86114262-1471-4b76-8149-f0966a1668c3"; }
     ];
