@@ -1,0 +1,73 @@
+# Edit this configuration file to define what should be installed on
+# your system. Help is available in the configuration.nix(5) man page, on
+# https://search.nixos.org/options and in the NixOS manual (`nixos-help`).
+
+{ config, lib, pkgs, ... }:
+
+let
+  txtimport = import /etc/nixos/modules/packages/txtimport.nix { inherit pkgs lib; };
+  mainUsername = "artnoi";
+in
+{
+  imports =
+    [
+      /etc/nixos/hardware-configuration.nix
+      /etc/nixos/modules/iwd.nix
+      /etc/nixos/modules/main-user.nix
+    ];
+
+  # Use the systemd-boot EFI boot loader.
+  boot.loader.systemd-boot.enable = true;
+  boot.loader.efi.canTouchEfiVariables = true;
+
+  # This option defines the first version of NixOS you have installed on this particular machine,
+  # and is used to maintain compatibility with application data (e.g. databases) created on older NixOS versions.
+  #
+  # Most users should NEVER change this value after the initial install, for any reason,
+  # even if you've upgraded your system to a new NixOS release.
+  #
+  # This value does NOT affect the Nixpkgs version your packages and OS are pulled from,
+  # so changing it will NOT upgrade your system.
+  #
+  # This value being lower than the current NixOS release does NOT mean your system is
+  # out of date, out of support, or vulnerable.
+  #
+  # Do NOT change this value unless you have manually inspected all the changes it would make to your configuration,
+  # and migrated your data accordingly.
+  #
+  # For more information, see `man configuration.nix` or https://nixos.org/manual/nixos/stable/options#opt-system.stateVersion .
+  system.stateVersion = "23.11"; # Did you read the comment?
+
+  nixpkgs.config.allowUnfree = true;
+
+  # boot.loader.systemd-boot.enable = true;
+  # boot.loader.efi.canTouchEfiVariables = true;
+  boot.kernelPackages = pkgs.linuxPackages_latest;
+  boot.initrd.luks.devices = {
+    crypted = {
+      device = "/dev/disk/by-uuid/31e319df-c4fe-48f5-82f5-49c7a5503119";
+      preLVM = true;
+      allowDiscards = true; 
+    };   
+  };
+
+
+  environment.systemPackages = [
+    # other packages go here
+  ]
+  ++ txtimport /etc/nixos/modules/packages/base.txt
+  ++ txtimport /etc/nixos/modules/packages/devel.txt
+  ++ txtimport /etc/nixos/modules/packages/net.txt;
+
+  main-user.enable = true;
+  main-user.userName = mainUsername;
+
+  security.sudo.enable = false;
+  security.doas.enable = true;
+  security.doas.extraRules = [{
+    users = [ mainUsername ];
+    keepEnv = true;
+    persist = true;
+  }];
+}
+
