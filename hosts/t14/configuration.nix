@@ -20,6 +20,7 @@ in
       /etc/nixos/hardware-configuration.nix
       /etc/nixos/modules/iwd.nix
       /etc/nixos/modules/main-user.nix
+      /etc/nixos/modules/doas.nix
     ];
 
   # Use the systemd-boot EFI boot loader.
