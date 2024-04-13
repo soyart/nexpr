@@ -19,11 +19,15 @@ The expressions are grouped into 2 categories:
 
   - Host expressions are symlinked to `/etc/nixos`
 
-## stow.sh
+## stow.sh and stow-sudo.sh
 
+> Both scripts are equivalent, with the difference being stow.sh uses
+> doas to escalate privilege, while stow-sudo.sh uses sudo.
+>
 > ```
 > Usage:
 > stow.sh <HOST>
+> stow-sudo.sh <HOST>
 > ```
 
 stow.sh helps you stow your expressions into `/etc/{nixos,nixos/modules}`.

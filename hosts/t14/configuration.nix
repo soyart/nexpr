@@ -20,6 +20,7 @@ in
       /etc/nixos/hardware-configuration.nix
       /etc/nixos/modules/iwd.nix
       /etc/nixos/modules/main-user.nix
+      /etc/nixos/modules/doas.nix
     ];
 
   # Use the systemd-boot EFI boot loader.
@@ -65,12 +66,12 @@ in
   main-user.enable = true;
   main-user.userName = mainUsername;
 
-  security.sudo.enable = false;
-  security.doas.enable = true;
-  security.doas.extraRules = [{
-    users = [ mainUsername ];
+  doas.enable = true;
+  doas.settings = {
+    keepSudo = false;
+    users = [mainUsername];
     keepEnv = true;
     persist = true;
-  }];
+  };
 }
 
