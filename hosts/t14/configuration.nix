@@ -2,30 +2,14 @@
 # your system. Help is available in the configuration.nix(5) man page, on
 # https://search.nixos.org/options and in the NixOS manual (`nixos-help`).
 
-{ lib, pkgs, ... }:
+{ ... }:
 
-let
-  mainUsername = "artnoi";
-
-  txtPackage = import /etc/nixos/modules/packages/txtimport.nix { inherit pkgs lib; };
-  myPackages = txtPackage /etc/nixos/modules/packages/base.txt
-  ++ txtPackage /etc/nixos/modules/packages/devel.txt
-  ++ txtPackage /etc/nixos/modules/packages/net.txt
-  ++ txtPackage /etc/nixos/modules/packages/laptop.txt;
-
-in
 {
   imports =
     [
       /etc/nixos/hardware-configuration.nix
-      /etc/nixos/modules/iwd.nix
-      /etc/nixos/modules/main-user.nix
-      /etc/nixos/modules/doas.nix
+      /home/artnoi/.nixos/t14.nix
     ];
-
-  # Use the systemd-boot EFI boot loader.
-  boot.loader.systemd-boot.enable = true;
-  boot.loader.efi.canTouchEfiVariables = true;
 
   # This option defines the first version of NixOS you have installed on this particular machine,
   # and is used to maintain compatibility with application data (e.g. databases) created on older NixOS versions.
@@ -46,32 +30,5 @@ in
   system.stateVersion = "23.11"; # Did you read the comment?
 
   nixpkgs.config.allowUnfree = true;
-
-  # boot.loader.systemd-boot.enable = true;
-  # boot.loader.efi.canTouchEfiVariables = true;
-  boot.kernelPackages = pkgs.linuxPackages_latest;
-  boot.initrd.luks.devices = {
-    crypted = {
-      device = "/dev/disk/by-uuid/31e319df-c4fe-48f5-82f5-49c7a5503119";
-      preLVM = true;
-      allowDiscards = true; 
-    };   
-  };
-
-
-  environment.systemPackages = [
-    # Other packages go here
-  ] ++ myPackages;
-
-  main-user.enable = true;
-  main-user.userName = mainUsername;
-
-  doas.enable = true;
-  doas.settings = {
-    keepSudo = false;
-    users = [mainUsername];
-    keepEnv = true;
-    persist = true;
-  };
 }
 

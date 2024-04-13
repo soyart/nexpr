@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-DOAS_SUDO=${DOAS_SUDO:=doas}
+set -e;
 
 halp() {
   echo "stow.sh [HOST]";
@@ -15,8 +15,9 @@ case "$1" in
 esac;
 
 HOST="$1";
-NIXOS_ROOT="/etc/nixos"
-NIXOS_MODS="/etc/nixos/modules";
+NIXOS_SYS_ROOT="/etc/nixos";
+NIXOS_HOME="$HOME/.nixos";
+NIXOS_MODS="$HOME/.nixos/modules";
 
 die() {
   local msg="$1";
@@ -37,32 +38,54 @@ stow_src_dst() {
   local src="$1";
   local dst="$2";
 
-  test -z "$src" && die "stow_pkg_to: missing src"
-  test -z "$dst" && die "stow_pkg_to: missing dst"
-  test -d "$src" || die "stow_pkg_to: src is not a directory: '$src'"
-  test -d "$dst" || die "stow_pkg_to: dst is not a directory: '$dst'"
-  
-  echo "stowing $src -> $dst";
+  test -z "$src" && die "stow_src_dst: missing src"
+  test -z "$dst" && die "stow_src_dst: missing dst"
+  test -f "$src" || die "stow_src_dst: src is not a directory: '$src'"
+  test -d "$dst" || die "stow_src_dst: dst is not a directory: '$dst'"
+
+  echo "stowing file $src -> $dst";
 
   if stow_test "$src" "$dst"; then
-    bash -c "$DOAS_SUDO stow -t $dst $src" \
-      || die "stow_pkg_to: failed to stow $src";
+    stow -t "$dst" "$src" \
+      || die "stow_src_dst: failed to stow $src";
 
   else
-    die "stow_pkg_to: dry-run failed for '$src' -> '$dst'";
+    die "stow_src_dst: dry-run failed for '$src' -> '$dst'";
+  fi;
+}
+
+stow_pkg_src_dst() {
+  local src="$1";
+  local dst="$2";
+
+  test -z "$src" && die "stow_pkg_src_dst: missing src"
+  test -z "$dst" && die "stow_pkg_src_dst: missing dst"
+  test -d "$src" || die "stow_pkg_src_dst: src is not a directory: '$src'"
+  test -d "$dst" || die "stow_pkg_src_dst: dst is not a directory: '$dst'"
+  
+  echo "stowing pkg $src -> $dst";
+
+  if stow_test "$src" "$dst"; then
+    stow -t "$dst" "$src" \
+      || die "stow_pkg_src_dst: failed to stow $src";
+
+  else
+    die "stow_pkg_src_dst: dry-run failed for '$src' -> '$dst'";
   fi;
 }
 
 stow_modules() {
   test -d "${NIXOS_MODS}" || die "stow_modules: NIXOS_MODS is not a directory: '${NIXOS_MODS}'";
-  stow_src_dst "modules" "$NIXOS_MODS";
 
-  echo "stow_modules: done"
+  stow_pkg_src_dst "entrypoints" "${NIXOS_HOME}";
+  stow_pkg_src_dst "modules" "${NIXOS_MODS}";
+
+  echo "stow_modules: done";
 }
 
 stow_host() {
   pushd "hosts" > /dev/null 2>&1;
-  stow_src_dst "${HOST}" "$NIXOS_ROOT";
+  stow_pkg_src_dst "${HOST}" "${NIXOS_SYS_ROOT}";
   popd > /dev/null 2>&1;
 
   echo "stow_host: done: ${HOST}"
@@ -71,15 +94,12 @@ stow_host() {
 main() {
   if ! [ -d "${NIXOS_MODS}" ]; then
     echo "Creating ${NIXOS_MODS}";
-    bash -c "${DOAS_SUDO} mkdir -p ${NIXOS_MODS}";
+    mkdir -p "${NIXOS_MODS}";
   fi;
 
   stow_modules;
 
-  test -n "${HOST}" && stow_host
+  test -n "${HOST}" && stow_host;
 }
 
 main;
-
-unset DOAS_SUDO
-
