@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+DOAS_SUDO=${DOAS_SUDO:=doas}
+
 halp() {
   echo "stow.sh [HOST]";
   echo "Stows modules to /etc/nixos/modules, and hosts/<HOST> to /etc/nixos if given";
@@ -43,9 +45,8 @@ stow_src_dst() {
   echo "stowing $src -> $dst";
 
   if stow_test "$src" "$dst"; then
-    sudo stow -t "$dst" "$src"\
+    bash -c "$DOAS_SUDO stow -t $dst $src" \
       || die "stow_pkg_to: failed to stow $src";
-    
 
   else
     die "stow_pkg_to: dry-run failed for '$src' -> '$dst'";
@@ -70,7 +71,7 @@ stow_host() {
 main() {
   if ! [ -d "${NIXOS_MODS}" ]; then
     echo "Creating ${NIXOS_MODS}";
-    sudo mkdir -p "${NIXOS_MODS}";
+    bash -c "${DOAS_SUDO} mkdir -p ${NIXOS_MODS}";
   fi;
 
   stow_modules;
@@ -79,4 +80,6 @@ main() {
 }
 
 main;
+
+unset DOAS_SUDO
 

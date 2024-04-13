@@ -66,12 +66,12 @@ in
   main-user.enable = true;
   main-user.userName = mainUsername;
 
-  security.sudo.enable = false;
-  security.doas.enable = true;
-  security.doas.extraRules = [{
-    users = [ mainUsername ];
+  doas.enable = true;
+  doas.settings = {
+    keepSudo = false;
+    users = [mainUsername];
     keepEnv = true;
     persist = true;
-  }];
+  };
 }
 
