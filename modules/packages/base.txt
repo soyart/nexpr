@@ -4,5 +4,6 @@ tmux
 htop
 stow
 tree
+killall
 openssh
 ripgrep
