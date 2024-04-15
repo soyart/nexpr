@@ -3,6 +3,8 @@
 let
   mainUsername = "artnoi";
 
+  mkfsTmpfs = import ../modules/mktmpfs.nix;
+
   txtPackage = import ../modules/packages/txtimport.nix { inherit pkgs lib; };
   myPackages = txtPackage ../modules/packages/base.txt
   ++ txtPackage ../modules/packages/devel.txt
@@ -40,6 +42,9 @@ in
 
   main-user.enable = true;
   main-user.userName = mainUsername;
+
+  fileSystems."/rd" = mkfsTmpfs { size = "2G";};
+  fileSystems."/tmp" = mkfsTmpfs {};
 
   doas.enable = true;
   doas.settings = {
