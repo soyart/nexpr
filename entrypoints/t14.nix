@@ -39,8 +39,10 @@ in
     { mnt = "/rd"; size = "2G"; perm = "755"; }
   ];
 
-  main-user.enable = true;
-  main-user.userName = mainUsername;
+  mainUser = {
+    enable = true;
+    userName = mainUsername;
+  };
 
   doas.enable = true;
   doas.settings = {

@@ -2,7 +2,7 @@
 
 This repo hosts my Nix expressions for Nixos.
 
-The expressions are grouped into 2 categories:
+The expressions are grouped into 3 categories:
 
 - Entrypoints
 

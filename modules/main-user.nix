@@ -3,17 +3,17 @@ with lib;
 
 {
   options = {
-    main-user.enable = mkEnableOption "enable main-user.nix module";
-    main-user.userName = mkOption {
+    mainUser.enable = mkEnableOption "enable mainUser.nix module";
+    mainUser.userName = mkOption {
       type = types.str;
       default = "nixuser";
     };
   };
 
-  config = mkIf config.main-user.enable {
-    users.users.${config.main-user.userName} = {
+  config = mkIf config.mainUser.enable {
+    users.users.${config.mainUser.userName} = {
       isNormalUser = true;
-      home = "/home/${config.main-user.userName}";
+      home = "/home/${config.mainUser.userName}";
       createHome = true;
       extraGroups = [
         "wheel"
