@@ -3,8 +3,6 @@
 let
   mainUsername = "artnoi";
 
-  mkfsTmpfs = import ../modules/mktmpfs.nix;
-
   txtPackage = import ../modules/packages/txtimport.nix { inherit pkgs lib; };
   myPackages = txtPackage ../modules/packages/base.txt
   ++ txtPackage ../modules/packages/devel.txt
@@ -18,6 +16,7 @@ in
       ../modules/iwd.nix
       ../modules/main-user.nix
       ../modules/doas.nix
+      ../modules/ramdisk.nix
     ];
 
   # Use the systemd-boot EFI boot loader.
@@ -35,16 +34,13 @@ in
     };   
   };
 
-
-  environment.systemPackages = [
-    # Other packages go here
-  ] ++ myPackages;
+  ramDisks = [
+    { mnt = "/tmp"; perm = "755"; }
+    { mnt = "/rd"; size = "2G"; perm = "755"; }
+  ];
 
   main-user.enable = true;
   main-user.userName = mainUsername;
-
-  fileSystems."/rd" = mkfsTmpfs { size = "2G";};
-  fileSystems."/tmp" = mkfsTmpfs {};
 
   doas.enable = true;
   doas.settings = {
@@ -53,5 +49,9 @@ in
     keepEnv = true;
     persist = true;
   };
+
+  environment.systemPackages = [
+    # Other packages go here
+  ] ++ myPackages;
 }
 

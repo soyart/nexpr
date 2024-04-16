@@ -1,15 +1,16 @@
-{lib, config, pkgs, ...}:
+{lib, config, ...}:
+with lib;
 
 {
   options = {
-    main-user.enable = lib.mkEnableOption "enable main-user.nix module";
-    main-user.userName = lib.mkOption {
-      type = lib.types.str;
+    main-user.enable = mkEnableOption "enable main-user.nix module";
+    main-user.userName = mkOption {
+      type = types.str;
       default = "nixuser";
     };
   };
 
-  config = lib.mkIf config.main-user.enable {
+  config = mkIf config.main-user.enable {
     users.users.${config.main-user.userName} = {
       isNormalUser = true;
       home = "/home/${config.main-user.userName}";
