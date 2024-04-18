@@ -1,44 +1,51 @@
 { lib, config, ... }:
 
+with lib;
+with lib.types;
+
+let
+  cfg = config.doas;
+
+in
 {
   options = {
-    doas.enable = lib.mkEnableOption "enable doas";
+    doas.enable = mkEnableOption "Enable doas";
 
-    doas.settings.keepSudo = lib.mkOption {
-      type = lib.types.bool;
-      default = true;
-    };
-    doas.settings.keepEnv = lib.mkOption {
-      type = lib.types.bool;
-      default = true;
-    };
-    doas.settings.persist = lib.mkOption {
-      type = lib.types.bool;
-      default = true;
-    };
-
-    doas.settings.users = lib.mkOption {
-      type = lib.types.listOf lib.types.str;
-    };
-    doas.settings.groups = lib.mkOption {
-      type = lib.types.nullOr (lib.types.listOf lib.types.str);
-      default = null;
+    doas.settings = {
+      users = mkOption {
+        type = listOf str;
+        description = "List of usernames with doas enabled";
+      };
+      groups = mkOption {
+        type = listOf str;
+        default = [];
+        description = "List of user groups with doas enabled";
+      };
+      keepSudo = mkOption {
+        type = bool;
+        default = true;
+        description = "Keep sudo on the system";
+      };
+      keepEnv = mkOption {
+        type = bool;
+        default = true;
+      };
+      persist = mkOption {
+        type = bool;
+        default = true;
+      };
     };
   };
 
-  config = lib.mkIf config.doas.enable {
-    security.sudo.enable = config.doas.settings.keepSudo;
+  config = mkIf cfg.enable {
+    security.sudo.enable = cfg.settings.keepSudo;
 
     security.doas.enable = true;
     security.doas.extraRules = [{
-      groups = let
-        groups = config.doas.settings.groups;
-      in
-      if groups == null then [] else groups;
-
-      users = config.doas.settings.users;
-      keepEnv = config.doas.settings.keepEnv;
-      persist = config.doas.settings.persist;
+      users = cfg.settings.users;
+      groups = cfg.settings.groups;
+      keepEnv = cfg.settings.keepEnv;
+      persist = cfg.settings.persist;
     }];
   };
 }

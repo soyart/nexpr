@@ -39,17 +39,21 @@ in
     "/rd".size = "2G";
   };
 
+  iwd.enable = true;
+
   mainUser = {
     enable = true;
     userName = mainUsername;
   };
 
-  doas.enable = true;
-  doas.settings = {
-    keepSudo = false;
-    users = [mainUsername];
-    keepEnv = true;
-    persist = true;
+  doas = {
+    enable = true;
+    settings = {
+        keepSudo = false;
+        users = [ mainUsername ];
+        keepEnv = true;
+        persist = true;
+    };
   };
 
   environment.systemPackages = [
