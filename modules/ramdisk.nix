@@ -5,9 +5,8 @@ with lib.types;
 
 {
   options.ramDisks = mkOption {
-    type = listOf (submodule {
+    type = attrsOf (submodule {
       options = {
-        mnt = mkOption { type = str; };
         perm = mkOption { type = str; default = "755"; };
         size = mkOption { type = nullOr str; default = null; };
       };
@@ -17,18 +16,17 @@ with lib.types;
   config = let
     cfg = config.ramDisks;
 
-    mapFn = c: {
-      "${c.mnt}" = {
-        device = "none";
-        fsType = "tmpfs";
-        options = let
-          mntOpts = [ "defaults"  "mode=${c.perm}" ];
-        in
-        if c.size == null then mntOpts else mntOpts ++ ["size=${c.size}"];
-      };
+    mapFn = key: value: let
+      mntOpts = ["defaults" "mode=${value.perm}"];
+    in
+    {
+      device = "none";
+      fsType = "tmpfs";
+      options = if value.size == null then mntOpts else mntOpts ++ ["size=${value.size}"];
     };
-    
+
     in {
-      fileSystems = attrsets.mergeAttrsList (builtins.map mapFn cfg);
+      # Nix module system will merge this to global config.fileSystems
+      fileSystems = mapAttrs mapFn cfg;
     };
 }

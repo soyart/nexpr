@@ -16,7 +16,7 @@ in
       ../modules/iwd.nix
       ../modules/main-user.nix
       ../modules/doas.nix
-      ../modules/ramdisk1.nix
+      ../modules/ramdisk.nix
     ];
 
   # Use the systemd-boot EFI boot loader.
