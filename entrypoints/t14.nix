@@ -34,10 +34,10 @@ in
     };   
   };
 
-  ramDisks = [
-    { mnt = "/tmp"; perm = "755"; }
-    { mnt = "/rd"; size = "2G"; perm = "755"; }
-  ];
+  ramDisks = {
+    "/tmp" = {};
+    "/rd".size = "2G";
+  };
 
   mainUser = {
     enable = true;
