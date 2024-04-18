@@ -9,7 +9,7 @@ with lib.types;
       options = {
         mnt = mkOption { type = str; };
         perm = mkOption { type = str; default = "755"; };
-        size = mkOption { type = nullOr str; };
+        size = mkOption { type = nullOr str; default = null; };
       };
     });
   };
@@ -24,7 +24,7 @@ with lib.types;
         options = let
           mntOpts = [ "defaults"  "mode=${c.perm}" ];
         in
-        mntOpts;
+        if c.size == null then mntOpts else mntOpts ++ ["size=${c.size}"];
       };
     };
     
