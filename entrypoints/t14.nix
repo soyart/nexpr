@@ -16,7 +16,7 @@ in
       ../modules/iwd.nix
       ../modules/main-user.nix
       ../modules/doas.nix
-      ../modules/ramdisk.nix
+      ../modules/ramdisk1.nix
     ];
 
   # Use the systemd-boot EFI boot loader.
@@ -34,10 +34,10 @@ in
     };   
   };
 
-  ramDisks = [
-    { mnt = "/tmp"; perm = "755"; }
-    { mnt = "/rd"; size = "2G"; perm = "755"; }
-  ];
+  ramDisks = {
+    "/tmp" = {};
+    "/rd".size = "2G";
+  };
 
   mainUser = {
     enable = true;
