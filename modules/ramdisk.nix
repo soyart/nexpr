@@ -25,8 +25,8 @@ with lib.types;
       options = if value.size == null then mntOpts else mntOpts ++ ["size=${value.size}"];
     };
 
-    in {
-      # Nix module system will merge this to global config.fileSystems
-      fileSystems = mapAttrs mapFn cfg;
-    };
+  in {
+    # Nix module system will merge this to global config.fileSystems
+    fileSystems = mapAttrs mapFn cfg;
+  };
 }
