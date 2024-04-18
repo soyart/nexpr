@@ -9,7 +9,6 @@ with lib.types;
       options = {
         perm = mkOption { type = str; default = "755"; };
         size = mkOption { type = nullOr str; default = null; };
-        neededForBoot = mkOption {type = bool; default = true;};
       };
     });
   };
