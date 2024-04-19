@@ -25,15 +25,11 @@ rec {
       matched = builtins.match regexV4WithPort addr;
       address = lists.elemAt matched 0;
       componentsInts = map strings.toInt (builtins.tail matched);
-      componentsAddr = lists.take 4 componentsInts;
       port = lists.last componentsInts;
 
     in
     {
       inherit address port;
-
-      valid = builtins.length componentsAddr == 4
-        && (port' <= 65535)
-        && (builtins.all (x: x < 255) componentsAddr);
+      valid = (port <= 65535) && assertV4 address;
     };
 }
