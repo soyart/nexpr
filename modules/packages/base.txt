@@ -4,6 +4,7 @@ tmux
 htop
 stow
 tree
+lsof
 killall
 openssh
 ripgrep
