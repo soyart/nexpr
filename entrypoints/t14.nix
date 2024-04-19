@@ -1,6 +1,7 @@
 { lib, pkgs, ... }:
 
 let
+  hostname = "nexpr-t14";
   mainUsername = "artnoi";
 
   txtPackage = import ../modules/packages/txtimport.nix { inherit pkgs lib; };
@@ -56,6 +57,9 @@ in
         persist = true;
     };
   };
+
+  networking.hostName = hostname;
+  networking.nameservers = [ "1.1.1.1" "9.9.9.9" ];
 
   environment.systemPackages = [
     # Other packages go here
