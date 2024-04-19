@@ -11,17 +11,23 @@ in
 rec {
   inherit regexV4 regexV4WithPort;
 
-  assertV4 = addr: let
+  parseV4 = addr: let
       matched = builtins.match regexV4 addr;
-      s = lists.elemAt matched 0;
+      address = lists.elemAt matched 0;
       componentsInts = map strings.toInt (builtins.tail matched);
 
     in
-    s == addr
-      && builtins.length componentsInts == 4
-      && builtins.all (x: x < 255) componentsInts;
+    {
+      inherit address;
 
-  assertV4WithPort = addr: let
+      valid = address == addr
+        && builtins.length componentsInts == 4
+        && builtins.all (x: x < 255) componentsInts;
+    };
+
+  assertV4 = addr: (parseV4 addr).valid;
+
+  parseV4WithPort = addr: let
       matched = builtins.match regexV4WithPort addr;
       address = lists.elemAt matched 0;
       componentsInts = map strings.toInt (builtins.tail matched);
@@ -30,6 +36,9 @@ rec {
     in
     {
       inherit address port;
-      valid = (port <= 65535) && assertV4 address;
+
+      valid = (port <= 65535) && (assertV4 address);
     };
+
+  assertV4WithPort = addr: (parseV4WithPort addr).valid;
 }
