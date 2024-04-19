@@ -50,8 +50,8 @@ in
 
   doas = {
     enable = true;
+    keepSudo = false;
     settings = {
-        keepSudo = false;
         users = [ mainUsername ];
         keepEnv = true;
         persist = true;

@@ -11,6 +11,12 @@ in
   options = {
     doas.enable = mkEnableOption "Enable doas";
 
+    doas.keepSudo = mkOption {
+      type = bool;
+      default = true;
+      description = "Keep sudo on the system";
+    };
+
     doas.settings = {
       users = mkOption {
         type = listOf str;
@@ -20,11 +26,6 @@ in
         type = listOf str;
         default = [];
         description = "List of user groups with doas enabled";
-      };
-      keepSudo = mkOption {
-        type = bool;
-        default = true;
-        description = "Keep sudo on the system";
       };
       keepEnv = mkOption {
         type = bool;
@@ -38,7 +39,7 @@ in
   };
 
   config = mkIf cfg.enable {
-    security.sudo.enable = cfg.settings.keepSudo;
+    security.sudo.enable = cfg.keepSudo;
 
     security.doas.enable = true;
     security.doas.extraRules = [{
