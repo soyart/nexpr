@@ -28,7 +28,7 @@ rec {
         && builtins.all (x: x < 255) componentsInts;
     };
 
-  assertV4 = addr: (parseV4 addr).valid;
+  isV4 = addr: (parseV4 addr).valid;
 
   parseV4WithPort = addr: let
       matched = builtins.match regexV4WithPort addr;
@@ -44,8 +44,8 @@ rec {
         && componentsInts != null
         && port != null
         && (port <= 65535)
-        && (assertV4 address);
+        && (isV4 address);
     };
 
-  assertV4WithPort = addr: (parseV4WithPort addr).valid;
+  isV4WithPort = addr: (parseV4WithPort addr).valid;
 }
