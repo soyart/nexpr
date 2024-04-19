@@ -13,7 +13,8 @@ in
 {
   imports =
     [
-      ../modules/iwd.nix
+      ../modules/net/iwd.nix
+
       ../modules/main-user.nix
       ../modules/doas.nix
       ../modules/ramdisk.nix

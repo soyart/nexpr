@@ -1,6 +1,4 @@
-# nexpr
-
-This repo hosts my Nix expressions for Nixos.
+# nexpr (Nix expressions)
 
 The expressions are grouped into 3 categories:
 
