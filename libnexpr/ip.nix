@@ -20,7 +20,10 @@ rec {
     {
       inherit address;
 
-      valid = address == addr
+      valid = matched != null
+        && address != null
+        && componentsInts != null
+        && address == addr
         && builtins.length componentsInts == 4
         && builtins.all (x: x < 255) componentsInts;
     };
@@ -37,7 +40,11 @@ rec {
     {
       inherit address port;
 
-      valid = (port <= 65535) && (assertV4 address);
+      valid = matched != null
+        && componentsInts != null
+        && port != null
+        && (port <= 65535)
+        && (assertV4 address);
     };
 
   assertV4WithPort = addr: (parseV4WithPort addr).valid;
