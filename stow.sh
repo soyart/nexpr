@@ -4,7 +4,7 @@ set -e;
 
 halp() {
   echo "stow.sh [HOST]";
-  echo "Stows modules to /etc/nixos/modules, and hosts/<HOST> to /etc/nixos if given";
+  echo "Stows modules and libnexpr to ~/home/.nixos, and if <HOST> is provided, also stows hosts/<HOST> to /etc/nixos if given";
   exit 0;
 }
 

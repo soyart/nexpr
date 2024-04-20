@@ -1,4 +1,8 @@
-{ lib, pkgs, ... }:
+{ pkgs }:
+
+let
+  lib = pkgs.lib;
+in
 
 target: lib.pipe target [
   builtins.readFile

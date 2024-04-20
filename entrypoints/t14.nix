@@ -1,14 +1,8 @@
-{ lib, pkgs, ... }:
+{ pkgs, ... }:
 
 let
   hostname = "nexpr-t14";
   mainUsername = "artnoi";
-
-  txtPackage = import ../modules/packages/txtimport.nix { inherit pkgs lib; };
-  myPackages = txtPackage ../modules/packages/base.txt
-  ++ txtPackage ../modules/packages/devel.txt
-  ++ txtPackage ../modules/packages/net.txt
-  ++ txtPackage ../modules/packages/laptop.txt;
 
 in
 {
@@ -16,6 +10,7 @@ in
     [
       ../modules/net/iwd.nix
 
+      ../modules/packages.nix
       ../modules/main-user.nix
       ../modules/doas.nix
       ../modules/ramdisk.nix
@@ -61,8 +56,15 @@ in
   networking.hostName = hostname;
   networking.nameservers = [ "1.1.1.1" "9.9.9.9" ];
 
+  packages = [
+    ../packages/base.txt    
+    ../packages/devel.txt    
+    ../packages/net.txt    
+    ../packages/laptop.txt
+  ];
+
   environment.systemPackages = [
     # Other packages go here
-  ] ++ myPackages;
+  ];
 }
 
