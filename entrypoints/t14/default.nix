@@ -67,10 +67,10 @@ in
   };
 
   packages = [
-    ../../packages/base.txt
-    ../../packages/devel.txt
-    ../../packages/net.txt
-    ../../packages/laptop.txt
+    ../../packages/base
+    ../../packages/devel
+    ../../packages/net
+    ../../packages/laptop
   ];
 
   environment.systemPackages = [
