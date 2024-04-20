@@ -18,8 +18,7 @@ with lib.types;
 
     mapFn = key: value: let
       mntOpts = ["defaults" "mode=${value.perm}"];
-    in
-    {
+    in {
       device = "none";
       fsType = "tmpfs";
       options = if value.size == null then mntOpts else mntOpts ++ ["size=${value.size}"];

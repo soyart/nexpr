@@ -6,8 +6,7 @@ with lib.types;
 let
   cfg = config.mainUser;
 
-in
-{
+in {
   options = {
     mainUser = {
       enable = mkEnableOption "Enable mainUser module";

@@ -6,8 +6,7 @@ with lib.types;
 let
   cfg = config.unboundDoT;
 
-in
-{
+in {
   options = {
     unboundDoT.enable = mkEnableOption "Enable DNS-over-TLS with unbound";
     unboundDoT.nameserversDoT= mkOption {

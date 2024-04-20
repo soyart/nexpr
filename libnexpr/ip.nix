@@ -7,8 +7,7 @@ let
   regexV4 = "(([0-9]+).([0-9]+).([0-9]+).([0-9]+))";
   regexV4WithPort = regexV4 + "\:([0-9]+)";
 
-in
-rec {
+in rec {
   inherit regexV4 regexV4WithPort;
 
   parseV4 = addr: let
@@ -16,8 +15,7 @@ rec {
       address = lists.elemAt matched 0;
       componentsInts = map strings.toInt (builtins.tail matched);
 
-    in
-    {
+    in {
       inherit address;
 
       valid = matched != null
@@ -36,8 +34,7 @@ rec {
       componentsInts = map strings.toInt (builtins.tail matched);
       port = lists.last componentsInts;
 
-    in
-    {
+    in {
       inherit address port;
 
       valid = matched != null

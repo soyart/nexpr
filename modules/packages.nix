@@ -7,8 +7,7 @@ let
   cfg = config.packages;
   importTxt = import ../libnexpr/import-txt.nix { inherit pkgs; } ;
 
-in
-{
+in {
   options.packages= mkOption {
     type = listOf path;
     description = "List of nexpr package paths (text files whose line is a Nixpkgs package). The values will be assigned to environment.systemPackages";

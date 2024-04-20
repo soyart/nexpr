@@ -6,8 +6,7 @@ with lib.types;
 let
   cfg = config.iwd;
 
-in
-{
+in {
   options = {
     iwd.enable =  mkEnableOption "Enable iwd wireless daemon";
   };

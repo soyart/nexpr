@@ -6,8 +6,7 @@ with lib.types;
 let
   cfg = config.doas;
 
-in
-{
+in {
   options = {
     doas.enable = mkEnableOption "Enable doas";
 
