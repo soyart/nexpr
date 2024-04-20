@@ -8,7 +8,7 @@
   imports =
     [
       /etc/nixos/hardware-configuration.nix
-      /home/artnoi/.nixos/t14.nix
+      /home/artnoi/.nexpr/t14.nix
     ];
 
   # This option defines the first version of NixOS you have installed on this particular machine,
