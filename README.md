@@ -1,33 +1,70 @@
 # nexpr (Nix expressions)
 
-The expressions are grouped into 3 categories:
+Nix expressions and NixOS configurations
 
-- Entrypoints
+## Structure
 
-  - Entrypoints are top-level machine-specific Nix expressions,
-    replacing `/etc/configuration.nix` in traditional NixOS setup
+Nexpr files are grouped into 3 categories:
 
-  - Entrypoints are named "${NAME}.nix",
-    and are symlinked to `$HOME/.nixos/$NAME.nix` by [stow.sh](./stow.sh)
+### 1. Nexpr files
 
-- Modules
+These files represent nexpr, and will be [stowed to nexpr root](#nexpr-location)
+(`$HOME/.nexpr`) with a normal Bash script [`stow.sh`](./stow.sh)
 
-  - Modules are placed under directory [modules](./modules/)
-    and are meant to be shared across machines.
+There are 3 types of nexpr files, grouped together within the same
+directories:
 
-  - Modules are symlinked to `/$HOME/.nixos/modules` by [stow.sh](./stow.sh)
+- Entrypoints `entrypoints`
 
-- Hosts
+  Some top-level Nix expressions. The convention is that each entrypoint
+  is machine-specific, and should be the only nexpr files imported
+  by the system's `configuration.nix`
 
-  - Hosts are machine-specific Nix expressions
-    and are placed under [`hosts`](./hosts/) with
-    arbitrary directory names such as [hosts/t14](./hosts/t14/)
+- Modules `modules`
 
-  - Host files are 2 files per machine, a `configuration.nix`
-    and `hardware-configuration.nix`
+  Modules are general, shared nexpr Nix modules. Entrypoints generally
+  import the modules to compose higher-level Nix expressions
 
-  - Host expressions are symlinked to `/etc/nixos`
+- Nexpr library `libnexpr`
 
+  The library provides helper functions or expressions.
+  Unlike `modules`, libnexpr files are not neccessarily
+  Nix modules
+
+### 2. Host files
+
+- Hosts are machine-specific NixOS expressions
+  and are placed here under [`hosts`](./hosts/) with
+  arbitrary directory names such as [hosts/t14](./hosts/t14/)
+
+- Each machine should only correspond to a host directory
+
+- 2 files per host is our goal here - a `configuration.nix`
+  and the generated `hardware-configuration.nix`
+
+- Host expressions are symlinked to `/etc/nixos`
+
+### 3. Non-Nix
+
+Nexpr also provides non-Nix files, e.g. directory `./packages`
+which holds files, each is a list of package names in plain text,
+one per line.
+
+## Nexpr location
+
+We can just have NixOS configuration directly import
+the path to nexpr files.
+
+But this makes using nexpr stateful - it means that users will have to 
+remember where the location of the cloned repository was, and then
+updating their Nix expressions in `/etc/nixos` to correctly point to nexpr.
+
+To make it easy for all users, we recommend stowing nexpr to some
+well known locations, and to include every expression you need within
+nexpr.
+
+This is why nexpr provides `stow.sh`, a Bash script for stowing nexpr
+to these *well known* location, e.g. `$HOME/.nexpr` and `$HOME/etc/nixos`.
 
 ## stow.sh
 
@@ -36,8 +73,8 @@ The expressions are grouped into 3 categories:
 > stow.sh <HOST>
 > ```
 
-By default, it symlinks every module to `$HOME/.nixos/modules`,
-and puts all entrypoints in `$HOME/.nixos`.
+stow.sh helps link nexpr files and host files to your system.
+By default, stow.sh stows all nexpr files to nexpr root `$HOME/.nexpr`.
 
 If given a host (as 1st argument), then it also stows host's
 `hardware-configuration` and `configuration.nix` expressions
@@ -50,14 +87,21 @@ If we have the following files in our repository `nexpr`:
 ```
 # nexpr
 
-entrypoints/
-├── laptop.nix
-├── server.nix
-└── desktop.nix
+entrypoints
+├── laptop
+│   └── default.nix
+├── server
+│       ├── default.nix
+│       └── wireguard.nix
+└── workstation
+    └── default.nix
 
 modules/
 ├── wifi.nix
 └── laptop-lid.nix
+
+libnexpr/
+└── ip.nix
 
 hosts/
 ├── server
@@ -69,20 +113,24 @@ hosts/
 ```
 
 Then running `./stow.sh` (without the host argument) will result in
-all entrypoints and modules being linked to `$HOME/.nixos`:
+all nexpr files being linked to `$HOME/.nexpr`:
 
 ```
-# nexpr
-# ./stow.sh;
-
-entrypoints/
-├── laptop.nix      -> $HOME/.nixos/entrypoints/laptop.nix
-├── server.nix      -> $HOME/.nixos/entrypoints/server.nix 
-└── desktop.nix     -> $HOME/.nixos/entrypoints/desktop.nix 
+entrypoints
+├── laptop
+│   └── default.nix        -> $HOME/.nexpr/entrypoints/laptop/default.nix
+├── server
+│       ├── default.nix    -> $HOME/.nexpr/entrypoints/server/default.nix
+│       └── wireguard.nix  -> $HOME/.nexpr/entrypoints/server/wireguard.nix
+└── workstation
+    └── default.nix        -> $HOME/.nexpr/entrypoints/workstation/default.nix
 
 modules/
-├── wifi.nix        -> $HOME/.nixos/modules/wifi.nix
-└── laptop-lid.nix  -> $HOME/.nixos/modules/laptop-lid.nix
+├── wifi.nix        -> $HOME/.nexpr/modules/wifi.nix
+└── laptop-lid.nix  -> $HOME/.nexpr/modules/laptop-lid.nix
+
+libnexpr/
+└── ip.nix          -> $HOME/.nexpr/libnexpr/ip.nix
 
 hosts/
 ├── server
@@ -100,14 +148,21 @@ then `/etc/nixos` gets populated too:
 # nexpr
 # ./stow.sh laptop;
 
-entrypoints/
-├── laptop.nix      -> $HOME/.nixos/entrypoints/laptop.nix
-├── server.nix      -> $HOME/.nixos/entrypoints/server.nix 
-└── desktop.nix     -> $HOME/.nixos/entrypoints/desktop.nix 
+entrypoints
+├── laptop
+│   └── default.nix        -> $HOME/.nexpr/entrypoints/laptop/default.nix
+├── server
+│       ├── default.nix    -> $HOME/.nexpr/entrypoints/server/default.nix
+│       └── wireguard.nix  -> $HOME/.nexpr/entrypoints/server/wireguard.nix
+└── workstation
+    └── default.nix        -> $HOME/.nexpr/entrypoints/workstation/default.nix
 
 modules/
-├── wifi.nix        -> $HOME/.nixos/modules/wifi.nix
-└── laptop-lid.nix  -> $HOME/.nixos/modules/laptop-lid.nix
+├── wifi.nix        -> $HOME/.nexpr/modules/wifi.nix
+└── laptop-lid.nix  -> $HOME/.nexpr/modules/laptop-lid.nix
+
+libnexpr/
+└── ip.nix          -> $HOME/.nexpr/libnexpr/ip.nix
 
 hosts/
 ├── server
@@ -120,5 +175,3 @@ hosts/
 
 To keep things simple, keep each host expressions within their own
 directory, and avoid stowing more than 1 host to the same Nixos `/etc/nixos`.
-
-Instead, shared expressions are encouraged to be put in modules.

@@ -4,7 +4,7 @@ set -e;
 
 halp() {
   echo "stow.sh [HOST]";
-  echo "Stows modules to /etc/nixos/modules, and hosts/<HOST> to /etc/nixos if given";
+  echo "Stows modules and libnexpr to ~/home/.nexpr, and if <HOST> is provided, also stows hosts/<HOST> to /etc/nixos if given";
   exit 0;
 }
 
@@ -15,9 +15,15 @@ case "$1" in
 esac;
 
 HOST="$1";
+
 NIXOS_SYS_ROOT="/etc/nixos";
-NIXOS_HOME="$HOME/.nixos";
-NIXOS_MODS="$HOME/.nixos/modules";
+NEXPR_ROOT="$HOME/.nexpr";
+# Files to linked to NEXPR_ROOT
+NEXPR_DIRS=( \
+  "modules" \
+  "libnexpr" \
+  "entrypoints" \
+);
 
 die() {
   local msg="$1";
@@ -74,13 +80,20 @@ stow_pkg_src_dst() {
   fi;
 }
 
-stow_modules() {
-  test -d "${NIXOS_MODS}" || die "stow_modules: NIXOS_MODS is not a directory: '${NIXOS_MODS}'";
+stow_nexpr() {
+  for d in "${NEXPR_DIRS[@]}"; do
+    target="${NEXPR_ROOT}/${d}";
 
-  stow_pkg_src_dst "entrypoints" "${NIXOS_HOME}";
-  stow_pkg_src_dst "modules" "${NIXOS_MODS}";
+    if ! [ -d "$target" ]; then
+      echo "Creating ${target}"
+      mkdir -p "$target";
+    fi;
 
-  echo "stow_modules: done";
+    stow_pkg_src_dst "$d" "$target";
+  done;
+
+
+  echo "stow_nexpr: all done";
 }
 
 stow_host() {
@@ -92,13 +105,8 @@ stow_host() {
 }
 
 main() {
-  if ! [ -d "${NIXOS_MODS}" ]; then
-    echo "Creating ${NIXOS_MODS}";
-    mkdir -p "${NIXOS_MODS}";
-  fi;
-
-  stow_modules;
-
+  mkdir -p "${NEXPR_ROOT}";
+  stow_nexpr;
   test -n "${HOST}" && stow_host;
 }
 
