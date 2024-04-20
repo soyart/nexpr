@@ -9,6 +9,7 @@ in
   imports =
     [
       ../../modules/net/iwd.nix
+      ../../modules/net/unbound.nix
 
       ../../modules/packages.nix
       ../../modules/main-user.nix
@@ -54,7 +55,16 @@ in
   };
 
   networking.hostName = hostname;
-  networking.nameservers = [ "1.1.1.1" "9.9.9.9" ];
+  # networking.nameservers = [ "1.1.1.1" "9.9.9.9" ];
+
+  unboundDoT = {
+    enable = true;
+    nameserversDoT = [
+      "1.1.1.1@853#one.one.one.one"
+      "1.0.0.1@853#one.one.one.one"
+      "9.9.9.9@853#dns.quad9.net"
+    ];
+  };
 
   packages = [
     ../../packages/base.txt
