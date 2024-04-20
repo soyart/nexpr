@@ -1,51 +1,72 @@
 # nexpr (Nix expressions)
 
+Nix expressions and NixOS configurations
+
+## Structure
+
 Nexpr files are grouped into 3 categories:
 
-- Nexpr files
+### 1. Nexpr files
 
-  - These files represent nexpr, and will be stowed to nexpr root
-    (`$HOME/.nexpr`) with a normal Bash script [`stow.sh`](./stow.sh)
+These files represent nexpr, and will be [stowed to nexpr root](#nexpr-location)
+(`$HOME/.nexpr`) with a normal Bash script [`stow.sh`](./stow.sh)
 
-  - There are 3 types of nexpr files:
+There are 3 types of nexpr files, grouped together within the same
+directories:
 
-    - Entrypoints `entrypoints`
+- Entrypoints `entrypoints`
 
-      Some top-level Nix expressions. The convention is that each entrypoint
-      is machine-specific, and should be the only nexpr files imported
-      by the system's `configuration.nix`
+  Some top-level Nix expressions. The convention is that each entrypoint
+  is machine-specific, and should be the only nexpr files imported
+  by the system's `configuration.nix`
 
-    - Modules `modules`
+- Modules `modules`
 
-      Modules are general, shared nexpr Nix modules. Entrypoints generally
-      import the modules to compose higher-level Nix expressions
+  Modules are general, shared nexpr Nix modules. Entrypoints generally
+  import the modules to compose higher-level Nix expressions
 
-    - Nexpr library `libnexpr`
+- Nexpr library `libnexpr`
 
-      The library provides helper functions or expressions.
-      Unlike `modules`, libnexpr files are not neccessarily
-      Nix modules.
+  The library provides helper functions or expressions.
+  Unlike `modules`, libnexpr files are not neccessarily
+  Nix modules
 
-- Host files
+### 2. Host files
 
-  - Hosts are machine-specific NixOS expressions
-    and are placed here under [`hosts`](./hosts/) with
-    arbitrary directory names such as [hosts/t14](./hosts/t14/)
+- Hosts are machine-specific NixOS expressions
+  and are placed here under [`hosts`](./hosts/) with
+  arbitrary directory names such as [hosts/t14](./hosts/t14/)
 
-  - Each machine should only correspond to a host directory.
-  
-  - 2 files per host is our goal here - a `configuration.nix`
-    and the generated `hardware-configuration.nix`
+- Each machine should only correspond to a host directory
 
-  - Host expressions are symlinked to `/etc/nixos`
+- 2 files per host is our goal here - a `configuration.nix`
+  and the generated `hardware-configuration.nix`
 
-- Non-Nix files and directories
+- Host expressions are symlinked to `/etc/nixos`
 
-  Nexpr also provides non-Nix files, e.g. directory `./packages`
-  which holds files, each is a list of package names in plain text,
-  one per line.
+### 3. Non-Nix
 
-## Using stow.sh
+Nexpr also provides non-Nix files, e.g. directory `./packages`
+which holds files, each is a list of package names in plain text,
+one per line.
+
+## Nexpr location
+
+We can just have NixOS configuration directly import
+the path to nexpr files.
+
+But this makes using nexpr stateful - it means that users will have to 
+remember where the location of the cloned repository, and then updating
+their Nix expressions in `/etc/nixos` to correctly point to nexpr.
+
+To make it easy for all users, we recommend stowing nexpr to some
+well known locations, and to include every expression you need within
+nexpr.
+
+This is why nexpr provides `stow.sh`, a Bash script for stowing nexpr
+to these *well known* location, e.g. `$HOME/.nexpr` and `$HOME/etc/nixos`.
+
+## stow.sh
 
 > ```
 > Usage:
@@ -154,5 +175,3 @@ hosts/
 
 To keep things simple, keep each host expressions within their own
 directory, and avoid stowing more than 1 host to the same Nixos `/etc/nixos`.
-
-Instead, shared expressions are encouraged to be put in modules.
