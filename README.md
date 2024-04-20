@@ -56,8 +56,8 @@ We can just have NixOS configuration directly import
 the path to nexpr files.
 
 But this makes using nexpr stateful - it means that users will have to 
-remember where the location of the cloned repository, and then updating
-their Nix expressions in `/etc/nixos` to correctly point to nexpr.
+remember where the location of the cloned repository was, and then
+updating their Nix expressions in `/etc/nixos` to correctly point to nexpr.
 
 To make it easy for all users, we recommend stowing nexpr to some
 well known locations, and to include every expression you need within
