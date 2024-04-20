@@ -8,12 +8,12 @@ in
 {
   imports =
     [
-      ../modules/net/iwd.nix
+      ../../modules/net/iwd.nix
 
-      ../modules/packages.nix
-      ../modules/main-user.nix
-      ../modules/doas.nix
-      ../modules/ramdisk.nix
+      ../../modules/packages.nix
+      ../../modules/main-user.nix
+      ../../modules/doas.nix
+      ../../modules/ramdisk.nix
     ];
 
   # Use the systemd-boot EFI boot loader.
@@ -57,10 +57,10 @@ in
   networking.nameservers = [ "1.1.1.1" "9.9.9.9" ];
 
   packages = [
-    ../packages/base.txt    
-    ../packages/devel.txt    
-    ../packages/net.txt    
-    ../packages/laptop.txt
+    ../../packages/base.txt
+    ../../packages/devel.txt
+    ../../packages/net.txt
+    ../../packages/laptop.txt
   ];
 
   environment.systemPackages = [
