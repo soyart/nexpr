@@ -1,6 +1,5 @@
 { lib }:
 
-with lib;
 with lib.lists;
 
 let
@@ -12,7 +11,7 @@ in rec {
 
   parseV4 = addr: let
       matched = builtins.match regexV4 addr;
-      address = lists.elemAt matched 0;
+      address = builtins.head matched;
       componentsInts = map strings.toInt (builtins.tail matched);
 
     in {
@@ -30,7 +29,7 @@ in rec {
 
   parseV4WithPort = addr: let
       matched = builtins.match regexV4WithPort addr;
-      address = lists.elemAt matched 0;
+      address = builtins.head matched;
       componentsInts = map strings.toInt (builtins.tail matched);
       port = lists.last componentsInts;
 
