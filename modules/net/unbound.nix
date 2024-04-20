@@ -27,7 +27,10 @@ in
 
       # settings are mapped verbatim to unbound.conf(5)
       settings = {
+        remote-control.control-enable = true;
         server = {
+          val-log-level = 2;
+          aggressive-nsec = true;
           hide-identity = true;
           hide-version = true;
           interface = [
@@ -52,4 +55,4 @@ in
       };
     };
   };
-  }
+}
