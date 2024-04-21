@@ -6,8 +6,7 @@ let
 
 in
 {
-  imports =
-    [
+  imports = [
       ../../modules/net/iwd.nix
       ../../modules/net/unbound.nix
 
@@ -15,7 +14,12 @@ in
       ../../modules/main-user.nix
       ../../modules/doas.nix
       ../../modules/ramdisk.nix
-    ];
+  ];
+
+  nix.settings.experimental-features = [
+    "nix-command"
+    "flakes"
+  ]; 
 
   # Use the systemd-boot EFI boot loader.
   boot.loader.systemd-boot.enable = true;
