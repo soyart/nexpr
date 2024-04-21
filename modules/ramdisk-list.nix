@@ -5,6 +5,7 @@ with lib.types;
 
 {
   options.ramDiskList = mkOption {
+    description = "List of tmpfs mounts";
     type = listOf (submodule {
       options = {
         mnt = mkOption { type = str; };
@@ -12,6 +13,11 @@ with lib.types;
         size = mkOption { type = nullOr str; default = null; };
       };
     });
+    example = [
+      { mnt = "/rd1"; }
+      { mnt = "/rd2"; size = "500M";}
+      { mnt = "/rd2"; size = "1G"; perm = 744; }
+    ];
   };
 
   config = let
@@ -29,6 +35,6 @@ with lib.types;
     };
     
     in {
-      fileSystems = attrsets.mergeAttrsList (builtins.map mapFn cfg);
+      fileSystems = attrsets.mergeAttrsList (map mapFn cfg);
     };
 }

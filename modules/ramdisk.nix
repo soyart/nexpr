@@ -5,12 +5,21 @@ with lib.types;
 
 {
   options.ramDisks = mkOption {
+    description = "Set of tmpfs mounts";
     type = attrsOf (submodule {
       options = {
         perm = mkOption { type = str; default = "755"; };
         size = mkOption { type = nullOr str; default = null; };
       };
     });
+    example = {
+      "/rd1" = {};
+      "/rd2".size = "500M";
+      "/rd3" = {
+        size = "1G";
+        perm = "744";
+      };
+    };
   };
 
   config = let
