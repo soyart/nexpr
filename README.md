@@ -37,34 +37,32 @@ directories:
   and are placed here under [`hosts`](./hosts/) with
   arbitrary directory names such as [hosts/t14](./hosts/t14/)
 
-- Each machine should only correspond to a host directory
+- Each machine should only correspond to *a single* host directory
 
-- 2 files per host is our goal here - a `configuration.nix`
-  and the generated `hardware-configuration.nix`
+- 2 files (excluding flake files) per host is our goal here -
+  a `configuration.nix` and a generated `hardware-configuration.nix`
 
-- Host expressions are symlinked to `/etc/nixos`
+- A host's expressions are [symlinked to `/etc/nixos`](#nexpr-location)
 
 ### 3. Non-Nix
 
 Nexpr also provides non-Nix files, e.g. directory `./packages`
-which holds files, each is a list of package names in plain text,
-one per line.
+which holds text files, each is a list of package names in
+plain text, one package per line.
 
 ## Nexpr location
 
 We can just have NixOS configuration directly import
 the path to nexpr files.
 
-But this makes using nexpr stateful - it means that users will have to 
-remember where the location of the cloned repository was, and then
-updating their Nix expressions in `/etc/nixos` to correctly point to nexpr.
+However, arbitary locations will force users to  remember
+where the location of the cloned repository was, and then
+updating their Nix expressions in `/etc/nixos` to correctly
+point to nexpr location.
 
-To make it easy for all users, we recommend stowing nexpr to some
-well known locations, and to include every expression you need within
-nexpr.
-
-This is why nexpr provides `stow.sh`, a Bash script for stowing nexpr
-to these *well known* location, e.g. `$HOME/.nexpr` and `$HOME/etc/nixos`.
+To make it easy for all users, nexpr provides `stow.sh`, a Bash
+script for stowing nexpr to these *well known* location,
+e.g. `$HOME/.nexpr` and `$HOME/etc/nixos`.
 
 ## stow.sh
 

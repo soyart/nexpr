@@ -6,15 +6,10 @@
     nixpkgs.url = "nixpkgs/nixos-23.11";
   };
 
-  outputs = { self, nixpkgs, ... }: let
-    lib = nixpkgs.lib;
-
-    in {
-    nixosConfigurations = {
-      "nexpr-t14" = lib.nixosSystem {
-        system = "x86_64-linux";
-        modules = [ ./configuration.nix ];
-      };
+  outputs = { self, nixpkgs, ... }: with nixpkgs.lib; {
+    nixosConfigurations."nexpr-t14" = nixosSystem {
+      system = "x86_64-linux";
+      modules = [ ./configuration.nix ];
     };
   };
 }

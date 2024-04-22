@@ -21,18 +21,27 @@ in
     "flakes"
   ]; 
 
+  # Blacklist some driver modules
+  boot.blacklistedKernelModules = [
+    "btusb"
+    "bluetooth"
+    "uvcvideo"
+  ];
+  hardware.bluetooth = {
+    enable = false;
+    powerOnBoot = false;
+  };
+
   # Use the systemd-boot EFI boot loader.
+  boot.loader.grub.enable = false;
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
-
-  # boot.loader.systemd-boot.enable = true;
-  # boot.loader.efi.canTouchEfiVariables = true;
   boot.kernelPackages = pkgs.linuxPackages_latest;
   boot.initrd.luks.devices = {
     crypted = {
       device = "/dev/disk/by-uuid/31e319df-c4fe-48f5-82f5-49c7a5503119";
       preLVM = true;
-      allowDiscards = true; 
+      allowDiscards = true;
     };   
   };
 
@@ -59,7 +68,6 @@ in
   };
 
   networking.hostName = hostname;
-  # networking.nameservers = [ "1.1.1.1" "9.9.9.9" ];
 
   unboundDoT = {
     enable = true;
