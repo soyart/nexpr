@@ -1,4 +1,4 @@
-# nexpr (Nix expressions)
+# nexpr
 
 Nix expressions and NixOS configurations
 
