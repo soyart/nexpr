@@ -3,8 +3,11 @@
 with lib;
 with lib.types;
 
-{
-  options.ramDiskList = mkOption {
+let
+    cfg = config.nexpr.ramDiskList;
+
+in {
+  options.nexpr.ramDiskList = mkOption {
     description = "List of tmpfs mounts";
     type = listOf (submodule {
       options = {
@@ -21,8 +24,6 @@ with lib.types;
   };
 
   config = let
-    cfg = config.ramDiskList;
-
     mapFn = c: {
       "${c.mnt}" = {
         device = "none";

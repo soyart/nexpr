@@ -45,45 +45,48 @@ in
     };   
   };
 
-  ramDisks = {
-    "/tmp" = {};
-    "/rd".size = "2G";
-  };
-
-  iwd.enable = true;
-
-  mainUser = {
-    enable = true;
-    userName = mainUsername;
-  };
-
-  doas = {
-    enable = true;
-    keepSudo = false;
-    settings = {
-        users = [ mainUsername ];
-        keepEnv = true;
-        persist = true;
-    };
-  };
-
   networking.hostName = hostname;
 
-  unboundDoT = {
-    enable = true;
-    nameserversDoT = [
-      "1.1.1.1@853#one.one.one.one"
-      "1.0.0.1@853#one.one.one.one"
-      "9.9.9.9@853#dns.quad9.net"
+  nexpr = {
+    ramDisks = {
+      "/tmp" = {};
+      "/rd".size = "2G";
+    };
+
+    mainUser = {
+      enable = true;
+      username = mainUsername;
+    };
+
+    doas = {
+      enable = true;
+      keepSudo = false;
+      settings = {
+          users = [ mainUsername ];
+          keepEnv = true;
+          persist = true;
+      };
+    };
+
+    net = {
+      iwd.enable = true;
+      unboundDoT = {
+        enable = true;
+        nameserversDoT = [
+          "1.1.1.1@853#one.one.one.one"
+          "1.0.0.1@853#one.one.one.one"
+          "9.9.9.9@853#dns.quad9.net"
+        ];
+      };
+    };
+
+    packages = [
+      ../../packages/base
+      ../../packages/devel
+      ../../packages/net
+      ../../packages/laptop
     ];
   };
-
-  packages = [
-    ../../packages/base
-    ../../packages/devel
-    ../../packages/net
-    ../../packages/laptop
-  ];
 
   environment.systemPackages = [
     # Other packages go here

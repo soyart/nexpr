@@ -4,19 +4,19 @@ with lib;
 with lib.types;
 
 let
-  cfg = config.doas;
+  cfg = config.nexpr.doas;
 
 in {
-  options = {
-    doas.enable = mkEnableOption "Enable doas";
+  options.nexpr.doas = {
+    enable = mkEnableOption "Enable doas";
 
-    doas.keepSudo = mkOption {
+    keepSudo = mkOption {
       type = bool;
       default = true;
       description = "Keep sudo on the system";
     };
 
-    doas.settings = {
+    settings = {
       users = mkOption {
         type = listOf str;
         description = "List of usernames with doas enabled";

@@ -4,11 +4,11 @@ with lib;
 with lib.types;
 
 let
-  cfg = config.packages;
+  cfg = config.nexpr.packages;
   importTxt = import ../libnexpr/import-txt.nix { inherit pkgs; } ;
 
 in {
-  options.packages= mkOption {
+  options.nexpr.packages = mkOption {
     type = listOf path;
     description = "List of nexpr package paths (text files whose line is a Nixpkgs package). The values will be assigned to environment.systemPackages";
     default = [];

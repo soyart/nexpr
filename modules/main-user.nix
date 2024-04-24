@@ -4,40 +4,39 @@ with lib;
 with lib.types;
 
 let
-  cfg = config.mainUser;
+  cfg = config.nexpr.mainUser;
 
 in {
-  options = {
-    mainUser = {
-      enable = mkEnableOption "Enable mainUser module";
+  options.nexpr.mainUser = {
+    enable = mkEnableOption "Enable mainUser module";
 
-      userName = mkOption {
-        description = "Username";
-        type = str // {
-          check = (s: s != "root");
-        };
-        default = "nixuser";
-        example = "bob";
+    username= mkOption {
+      description = "Username";
+      type = str // {
+        check = (s: s != "root");
       };
-      groups = mkOption {
-        description = "Extra groups other than 'weel' and `users`";
-        type = listOf str // {
-          check =  (li: !(builtins.elem "wheel" li));
-        };
-        default = [];
-        example = [ "video" "docker" ];
+      default = "nixuser";
+      example = "bob";
+    };
+
+    groups = mkOption {
+      description = "Extra groups other than 'weel' and `users`";
+      type = listOf str // {
+        check =  (li: !(builtins.elem "wheel" li));
       };
+      default = [];
+      example = [ "video" "docker" ];
     };
   };
 
   config = mkIf cfg.enable {
-    users.groups."${cfg.userName}" = {
-      members = [ cfg.userName ];
+    users.groups."${cfg.username}" = {
+      members = [ cfg.username];
     };
 
-    users.users.${cfg.userName} = {
+    users.users.${cfg.username} = {
       isNormalUser = true;
-      home = "/home/${cfg.userName}";
+      home = "/home/${cfg.username}";
       createHome = true;
       extraGroups = cfg.groups ++ [ "wheel" ];
     };

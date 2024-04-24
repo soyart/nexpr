@@ -4,12 +4,12 @@ with lib;
 with lib.types;
 
 let
-  cfg = config.unboundDoT;
+  cfg = config.nexpr.net.unboundDoT;
 
 in {
-  options = {
-    unboundDoT.enable = mkEnableOption "Enable DNS-over-TLS with unbound";
-    unboundDoT.nameserversDoT= mkOption {
+  options.nexpr.net.unboundDoT = {
+    enable = mkEnableOption "Enable DNS-over-TLS with unbound";
+    nameserversDoT= mkOption {
       type = listOf str // {
         check = (li: builtins.length li != 0);
       };
@@ -20,8 +20,8 @@ in {
   };
 
   config = mkIf cfg.enable {
-    services.unbound.enable = true;
     services.unbound = {
+      enable = true;
       enableRootTrustAnchor = true;
 
       # settings are mapped verbatim to unbound.conf(5)

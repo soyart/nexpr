@@ -3,8 +3,11 @@
 with lib;
 with lib.types;
 
-{
-  options.ramDisks = mkOption {
+let
+  cfg = config.nexpr.ramDisks;
+
+in {
+  options.nexpr.ramDisks = mkOption {
     description = "Set of tmpfs mounts";
     type = attrsOf (submodule {
       options = {
@@ -23,8 +26,6 @@ with lib.types;
   };
 
   config = let
-    cfg = config.ramDisks;
-
     mapFn = key: value: let
       mntOpts = ["defaults" "mode=${value.perm}"];
     in {
