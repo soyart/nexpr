@@ -15,7 +15,7 @@ in {
       type = str // {
         check = (s: s != "root");
       };
-      default = "nixuser";
+      default = "nexpr";
       example = "bob";
     };
 
