@@ -2,7 +2,7 @@
 
 let
   envName = "dev-go";
-  aliasesGit = import ../git-aliases.nix;
+  aliasesGit = builtins.readFile ../git-aliases.sh;
 
 in {
   devShell = pkgs.mkShellNoCC {
