@@ -85,6 +85,7 @@ in
       ../../packages/devel
       ../../packages/net
       ../../packages/laptop
+      ../../packages/nix-extras
     ];
   };
 
