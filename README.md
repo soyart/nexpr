@@ -16,12 +16,12 @@ directories:
 
 - Entrypoints `entrypoints`
 
-  Some top-level Nix expressions. The convention is that each entrypoint
-  is machine-specific, and should be the only nexpr files imported
-  by the system's `configuration.nix`.
+  Top-level Nix and NixOS expressions.
+  The convention is that each entrypoint is machine-specific,
+  replacing vanilla system's `configuration.nix`.
 
-  If Nix Flakes are used, entrypoints should contain `flake.nix`
-  and `flake.lock`.
+  > If Nix Flakes are used, entrypoints should
+  > contain `flake.nix` and `flake.lock`.
 
 - Modules `modules`
 

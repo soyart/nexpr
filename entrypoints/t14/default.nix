@@ -7,9 +7,10 @@ let
 in
 {
   imports = [
+      ../../hosts/t14/configuration.nix
+
       ../../modules/net/iwd.nix
       ../../modules/net/unbound.nix
-
       ../../modules/packages.nix
       ../../modules/main-user.nix
       ../../modules/doas.nix
