@@ -18,7 +18,10 @@ directories:
 
   Some top-level Nix expressions. The convention is that each entrypoint
   is machine-specific, and should be the only nexpr files imported
-  by the system's `configuration.nix`
+  by the system's `configuration.nix`.
+
+  If Nix Flakes are used, entrypoints should contain `flake.nix`
+  and `flake.lock`.
 
 - Modules `modules`
 
@@ -39,7 +42,7 @@ directories:
 
 - Each machine should only correspond to *a single* host directory
 
-- 2 files (excluding flake files) per host is our goal here -
+- 2 files per host is our goal here (like in vanilla NixOS) -
   a `configuration.nix` and a generated `hardware-configuration.nix`
 
 - A host's expressions are [symlinked to `/etc/nixos`](#nexpr-location)
