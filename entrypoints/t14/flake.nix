@@ -1,9 +1,9 @@
 
 {
-  description = "Flake for NixOS 23.11";
+  description = "NixOS configuration";
 
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-23.11";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
   };
 
   outputs = { self, nixpkgs, ... }: with nixpkgs.lib; {
