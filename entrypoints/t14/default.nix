@@ -1,12 +1,13 @@
-{ inputs, pkgs, ... }:
+{ inputs, lib, pkgs, ... }:
 
 let
   hostname = "nexpr-t14";
   mainUsername = "artnoi";
 
-in
-{
+in {
   imports = [
+      inputs.home-manager.nixosModules.home-manager
+
       ../../hosts/t14/configuration.nix
 
       ../../modules/net/iwd.nix
@@ -15,8 +16,6 @@ in
       ../../modules/main-user.nix
       ../../modules/doas.nix
       ../../modules/ramdisk.nix
-
-      # ./home.nix
   ];
 
   nix.settings.experimental-features = [
@@ -30,6 +29,7 @@ in
     "bluetooth"
     "uvcvideo"
   ];
+
   hardware.bluetooth = {
     enable = false;
     powerOnBoot = false;
@@ -46,6 +46,16 @@ in
       preLVM = true;
       allowDiscards = true;
     };   
+  };
+
+  home-manager = {
+    useGlobalPkgs = true;
+    useUserPackages = true;
+
+    extraSpecialArgs = { inherit inputs; };
+    users = {
+      "${mainUsername}" = (import ./home.nix) { pkgs = pkgs; };
+    };
   };
 
   networking.hostName = hostname;
@@ -90,10 +100,6 @@ in
       ../../packages/laptop
       ../../packages/nix-extras
     ];
-  };
-
-  home-manager = {
-    extraSpecialArgs = { inherit inputs; };
   };
 
   environment.systemPackages = [

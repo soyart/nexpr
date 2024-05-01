@@ -1,4 +1,3 @@
-
 {
   description = "NixOS configuration";
 
@@ -12,22 +11,10 @@
     nixosConfigurations."nexpr-t14" = nixosSystem {
       system = "x86_64-linux";
       specialArgs = { inherit home-manager inputs; };
+
+      # homeManagerModules."nexpr-t14" = import ./home.nix;
       modules = [
         ./default.nix
-
-        home-manager.nixosModules.home-manager {
-          home-manager.useGlobalPkgs = true;
-          home-manager.useUserPackages = true;
-
-          home-manager.users.artnoi = {
-            # home.file.".config/helix" = {
-            #   source = "${unix}/dotfiles/pkg/helix/.config/helix";
-            #   recursive = true;
-            # };
-
-            home.stateVersion = "24.05";
-          };
-        }
       ];
     };
   };
