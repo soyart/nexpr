@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ inputs, pkgs, ... }:
 
 let
   hostname = "nexpr-t14";
@@ -90,6 +90,10 @@ in
       ../../packages/laptop
       ../../packages/nix-extras
     ];
+  };
+
+  home-manager = {
+    extraSpecialArgs = { inherit inputs; };
   };
 
   environment.systemPackages = [
