@@ -7,12 +7,11 @@
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
   };
 
-  outputs = { self, nixpkgs, home-manager, ... }@inputs : with nixpkgs.lib; {
+  outputs = { self, nixpkgs,  ... }@inputs : with nixpkgs.lib; {
     nixosConfigurations."nexpr-t14" = nixosSystem {
       system = "x86_64-linux";
-      specialArgs = { inherit home-manager inputs; };
+      specialArgs = { inherit inputs; };
 
-      # homeManagerModules."nexpr-t14" = import ./home.nix;
       modules = [
         ./default.nix
       ];
