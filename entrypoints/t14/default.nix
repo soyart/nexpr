@@ -16,7 +16,7 @@ in
       ../../modules/doas.nix
       ../../modules/ramdisk.nix
 
-      ./home.nix
+      # ./home.nix
   ];
 
   nix.settings.experimental-features = [
