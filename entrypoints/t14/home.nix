@@ -1,11 +1,30 @@
-{ inputs, username, unix, ... }:
+{ inputs, pkgs, username, unix, ... }:
 
 {
   imports = [
     inputs.home-manager.nixosModules.home-manager
 
     ../../modules/gui/sway.nix
+    ../../modules/gui/fonts.nix
   ];
+
+  nexpr.gui = {
+    sway.enable = true;
+
+    fonts = {
+      ttf = with pkgs; [
+        inconsolata
+        liberation_ttf
+      ];
+      nerdFonts = with pkgs; [
+        hack-font
+      ];
+      familyDefaults = {
+        sansSerif = "Liberation";
+        monospace = "Hack";
+      };
+    };
+  };
 
   home-manager = {
     useGlobalPkgs = true;
