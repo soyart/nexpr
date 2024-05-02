@@ -1,13 +1,18 @@
-{ lib, pkgs, username, unix, ... }:
+{ lib, config, pkgs, username, unix, ... }:
 
 with lib;
 
-{
+let
+  cfg = config.nexpr.gui.sway;
+
+in {
   options = {
-    nexpr.sway = mkEnableOption "Enable sway with config from gitlab.com/artnoi/unix";
+    nexpr.gui.sway = {
+      enable = mkEnableOption "Enable Sway DM with config from packages/drvs/unix";
+    };
   };
 
-  config = {
+  config = mkIf cfg.enable {
     security.polkit.enable = true;
 
     users.users."${username}" = {
@@ -62,7 +67,6 @@ with lib;
           recursive = true;
         };
       };
-
 
       wayland.windowManager.sway = {
         enable = true;

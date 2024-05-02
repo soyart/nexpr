@@ -86,6 +86,10 @@
       ../../packages/laptop
       ../../packages/nix-extras
     ];
+
+    gui = {
+      sway.enable = true;
+    };
   };
 
   environment.systemPackages = [
