@@ -7,14 +7,20 @@
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
   };
 
-  outputs = { self, nixpkgs,  ... }@inputs : with nixpkgs.lib; {
-    nixosConfigurations."nexpr-t14" = nixosSystem {
-      system = "x86_64-linux";
-      specialArgs = { inherit inputs; };
+  outputs = { self, nixpkgs,  ... }@inputs :
+    with nixpkgs.lib;
+    let
+      hostname = "nexpr-t14";
+      username = "artnoi";
 
-      modules = [
-        ./default.nix
-      ];
+    in {
+      nixosConfigurations."${hostname}" = nixosSystem {
+        system = "x86_64-linux";
+        specialArgs = { inherit inputs hostname username; };
+
+        modules = [
+          ./default.nix
+        ];
+      };
     };
-  };
 }

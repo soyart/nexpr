@@ -1,10 +1,6 @@
-{ inputs, pkgs, ... }:
+{ inputs, pkgs, hostname, username, ... }:
 
-let
-  hostname = "nexpr-t14";
-  mainUsername = "artnoi";
-
-in {
+{
   imports = [
       inputs.home-manager.nixosModules.home-manager
 
@@ -54,7 +50,7 @@ in {
 
     extraSpecialArgs = { inherit inputs; };
     users = {
-      "${mainUsername}" = (import ./home.nix) { pkgs = pkgs; };
+      "${username}" = (import ./home.nix) { pkgs = pkgs; };
     };
   };
 
@@ -68,14 +64,14 @@ in {
 
     mainUser = {
       enable = true;
-      username = mainUsername;
+      username = username;
     };
 
     doas = {
       enable = true;
       keepSudo = false;
       settings = {
-          users = [ mainUsername ];
+          users = [ username];
           keepEnv = true;
           persist = true;
       };
