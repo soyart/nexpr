@@ -11,15 +11,35 @@ with lib;
     security.polkit.enable = true;
 
     users.users."${username}" = {
-      extraGroups = [ "video" ];
+      extraGroups = [ "audio"  "video" ];
+    };
+
+    sound.enable = true;
+
+    hardware = {
+      pulseaudio.enable = true;
+      opengl.enable = true;
     };
 
     home-manager.users."${username}" = {
       home.packages = with pkgs; [
+        alacritty # Default terminal in sway config from unix
         wl-clipboard
         brightnessctl
-        alacritty # Default terminal in sway config from unix
+        pulseaudio
+        dash
+        swayidle
+        lm_sensors
       ];
+
+      programs.bash.enable = true;
+
+      home.sessionVariables = {
+        WAYLAND = "1";
+        MOZ_ENABLE_WAYLAND = "1";
+        XDG_SESSION_TYPE = "wayland";
+        XDG_CURRENT_DESKTOP = "sway";
+      };
 
       home.file = {
         ".config/sway" = {
@@ -28,16 +48,21 @@ with lib;
         };
 
         ".config/dwm" = {
-          source = "${unix}/dotfiles/linux/.config/sway";
+          source = "${unix}/dotfiles/linux/.config/dwm";
+          recursive = true;
+        };
+
+        "bin" = {
+          source = "${unix}/sh-tools/bin";
+          recursive = true;
+        };
+
+        "wall" = {
+          source = ./wall;
           recursive = true;
         };
       };
 
-      home.sessionVariables = {
-        MOZ_ENABLE_WAYLAND = "1";
-        XDG_SESSION_TYPE = "wayland";
-        XDG_CURRENT_DESKTOP = "sway";
-      };
 
       wayland.windowManager.sway = {
         enable = true;
