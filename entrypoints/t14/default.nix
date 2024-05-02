@@ -1,19 +1,17 @@
-{ pkgs, ... }:
+{ pkgs, hostname, username, ... }:
 
-let
-  hostname = "nexpr-t14";
-  mainUsername = "artnoi";
-
-in
 {
   imports = [
+      ../../hosts/t14/configuration.nix
+
       ../../modules/net/iwd.nix
       ../../modules/net/unbound.nix
-
       ../../modules/packages.nix
       ../../modules/main-user.nix
       ../../modules/doas.nix
       ../../modules/ramdisk.nix
+
+      ./home.nix
   ];
 
   nix.settings.experimental-features = [
@@ -27,6 +25,7 @@ in
     "bluetooth"
     "uvcvideo"
   ];
+
   hardware.bluetooth = {
     enable = false;
     powerOnBoot = false;
@@ -55,14 +54,14 @@ in
 
     mainUser = {
       enable = true;
-      username = mainUsername;
+      username = username;
     };
 
     doas = {
       enable = true;
       keepSudo = false;
       settings = {
-          users = [ mainUsername ];
+          users = [ username];
           keepEnv = true;
           persist = true;
       };
@@ -85,6 +84,7 @@ in
       ../../packages/devel
       ../../packages/net
       ../../packages/laptop
+      ../../packages/nix-extras
     ];
   };
 
