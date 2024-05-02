@@ -57,6 +57,11 @@ in {
           recursive = true;
         };
 
+        ".config/alacritty" = {
+          source = "${unix}/dotfiles/pkg/alacritty/.config/alacritty";
+          recursive = true;
+        };
+
         "bin" = {
           source = "${unix}/sh-tools/bin";
           recursive = true;
