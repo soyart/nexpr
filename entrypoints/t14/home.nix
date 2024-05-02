@@ -1,18 +1,17 @@
-{ inputs, pkgs, username, ...}:
+{ inputs, username, unix, ... }:
 
-let
-  unix = pkgs.callPackage ../../packages/drvs/unix/drv.nix {};
-
-in {
+{
   imports = [
     inputs.home-manager.nixosModules.home-manager
+
+    ../../modules/gui/sway.nix
   ];
 
   home-manager = {
     useGlobalPkgs = true;
     useUserPackages = true;
-
     extraSpecialArgs = { inherit inputs; };
+
     users = {
       "${username}" = {
           home.file = {
