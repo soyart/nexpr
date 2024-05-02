@@ -1,9 +1,7 @@
-{ inputs, pkgs, hostname, username, ... }:
+{ pkgs, hostname, username, ... }:
 
 {
   imports = [
-      inputs.home-manager.nixosModules.home-manager
-
       ../../hosts/t14/configuration.nix
 
       ../../modules/net/iwd.nix
@@ -12,6 +10,8 @@
       ../../modules/main-user.nix
       ../../modules/doas.nix
       ../../modules/ramdisk.nix
+
+      ./home.nix
   ];
 
   nix.settings.experimental-features = [
@@ -42,16 +42,6 @@
       preLVM = true;
       allowDiscards = true;
     };   
-  };
-
-  home-manager = {
-    useGlobalPkgs = true;
-    useUserPackages = true;
-
-    extraSpecialArgs = { inherit inputs; };
-    users = {
-      "${username}" = (import ./home.nix) { pkgs = pkgs; };
-    };
   };
 
   networking.hostName = hostname;
