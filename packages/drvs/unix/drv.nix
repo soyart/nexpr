@@ -27,7 +27,7 @@ stdenv.mkDerivation {
   installPhase = ''
     runHook preInstall
     mkdir -p $out;
-    cp *.sh  $out/;
+    cp -a ./*  $out/;
     runHook postInstall
   '';
 }
