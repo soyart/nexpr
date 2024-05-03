@@ -37,8 +37,6 @@ in {
         lm_sensors
       ];
 
-      programs.bash.enable = true;
-
       home.sessionVariables = {
         WAYLAND = "1";
         MOZ_ENABLE_WAYLAND = "1";
