@@ -24,56 +24,53 @@ in {
         ];
       };
 
-      nerdFonts = mkOption {
-        description = "Nerd Fonts";
-        type = listOf package;
-        default = with pkgs; [
-          hack-font
-        ];
-        example = with pkgs; [
-          inconsolata
-          hack-font
-        ];
-      };
+      # nerdFonts = mkOption {
+      #   description = "Nerd Font names for override";
+      #   type = listOf str;
+      #   default = [
+      #     "Hack"
+      #   ];
+      #   example = [
+      #     "Hack"
+      #     "Inconsolata"
+      #   ];
+      # };
 
-      familyDefaults = let example = [
-        "Ubuntu"
-        "Inconsolata"
-      ];
-      in {
-        serif = mkOption {
-          description = "List of font names (not package names)";
-          type = listOf str;
-          default = [];
-          inherit example;
-        };
-        sansSerif = mkOption {
-          description = "List of font names (not package names)";
-          type = listOf str;
-          default = [];
-          inherit example;
-        };
-        monospace = mkOption {
-          description = "List of font names (not package names)";
-          type = listOf str;
-          default = [];
-          inherit example;
-        };
-      };
+      # familyDefaults = let example = [
+      #   "Ubuntu"
+      # ];
+      # in {
+      #   serif = mkOption {
+      #     description = "List of font names (not package names)";
+      #     type = str;
+      #     inherit example;
+      #   };
+      #   sansSerif = mkOption {
+      #     description = "List of font names (not package names)";
+      #     type = str;
+      #     inherit example;
+      #   };
+      #   monospace = mkOption {
+      #     description = "List of font names (not package names)";
+      #     type = str;
+      #     inherit example;
+      #   };
+      # };
     };
   };
 
   config = mkIf cfg.enable {
-    fonts = let
-      fontsNerd = (nerdfonts.override {
-        fonts = cfg.nerdFonts;
-      });
-    in {
-      packages = cfg.ttf ++ fontsNerd;
+    fonts.packages = cfg.ttf;
+    # fonts = let
+    #   fontsNerd = (pkgs.nerdfonts.override {
+    #     fonts = cfg.nerdFonts;
+    #   });
+    # in {
+    #   packages = cfg.ttf ++ fontsNerd;
       
-      fontconfig = {
-        defaultFonts = cfg.familyDefaults;
-      };
-    };
+    #   # fontconfig = {
+    #   #   defaultFonts = cfg.familyDefaults;
+    #   # };
+    # };
   };
 }

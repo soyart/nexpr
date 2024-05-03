@@ -12,17 +12,20 @@
     sway.enable = true;
 
     fonts = {
+      enable = true;
+
       ttf = with pkgs; [
+        hack-font
         inconsolata
         liberation_ttf
       ];
-      nerdFonts = with pkgs; [
-        hack-font
-      ];
-      familyDefaults = {
-        sansSerif = "Liberation";
-        monospace = "Hack";
-      };
+      # nerdFonts = [
+      #   "Hack"
+      # ];
+      # familyDefaults = {
+      #   sansSerif = "Liberation";
+      #   monospace = "Hack";
+      # };
     };
   };
 
