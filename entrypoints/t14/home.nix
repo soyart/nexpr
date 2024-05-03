@@ -1,4 +1,4 @@
-{ inputs, pkgs, username, unix, ... }:
+{ inputs, pkgs, username, ... }:
 
 {
   imports = [
@@ -6,6 +6,8 @@
 
     ../../modules/gui/sway.nix
     ../../modules/gui/fonts.nix
+
+    ../../modules/progs/helix
   ];
 
   nexpr.gui = {
@@ -36,13 +38,6 @@
 
     users = {
       "${username}" = {
-          home.file = {
-            ".config/helix" = {
-              source = "${unix}/dotfiles/pkg/helix/.config/helix";
-              recursive = true;
-            };
-          };
-
           home.stateVersion = "24.05";
       };
     };
