@@ -7,8 +7,9 @@
     ../../modules/progs/git
     ../../modules/progs/helix
 
-    ../../modules/gui/sway.nix
     ../../modules/gui/fonts.nix
+    ../../modules/gui/progs/sway.nix
+    ../../modules/gui/progs/firefox
   ];
 
   home-manager = {
@@ -49,7 +50,9 @@
     };
 
     gui = {
-      sway.enable = true;
+      progs = {
+        sway.enable = true;
+      };
 
       fonts = {
         enable = true;

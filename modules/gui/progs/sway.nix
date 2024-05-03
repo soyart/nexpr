@@ -3,11 +3,11 @@
 with lib;
 
 let
-  cfg = config.nexpr.gui.sway;
+  cfg = config.nexpr.gui.progs.sway;
 
 in {
   options = {
-    nexpr.gui.sway = {
+    nexpr.gui.progs.sway = {
       enable = mkEnableOption "Enable Sway DM with config from packages/drvs/unix";
     };
   };
@@ -65,7 +65,7 @@ in {
         };
 
         "wall" = {
-          source = ./wall;
+          source = ../wall;
           recursive = true;
         };
       };
