@@ -36,6 +36,16 @@
         username = "soyart";  
         email = "artdrawin@gmail.com";
       };
+
+      helix = {
+        enable = true;  
+        langServers = with pkgs; [
+          nil
+          gopls
+          marksman
+          rust-analyzer
+        ];
+      };
     };
 
     gui = {
