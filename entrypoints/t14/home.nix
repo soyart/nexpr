@@ -20,14 +20,12 @@
         liberation_ttf
       ];
 
-      nerd = [
-        "Hack"
-      ];
+      nerd = [ "Hack" ];
 
-      # defaults = {
-      #   sansSerif = "Liberation";
-      #   monospace = "Hack";
-      # };
+      defaults = {
+        sansSerif = [ "Liberation" ];
+        monospace = [ "Hack" ];
+      };
     };
   };
 

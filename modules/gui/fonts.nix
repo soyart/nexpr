@@ -34,27 +34,40 @@ in {
         ];
       };
 
-      # defaults = mkOption {
-      #   description = "Default font names for each typeface family";
-      #   type = nullOr attrsOf str;
-      #   default = {};
-      #   example = {
-      #     serif = "Ubuntu";
-      #     sansSerif = "Liberation";
-      #     monospace = "Hack";
-      #   };
-      # };
+      defaults = mkOption {
+        description = "Default font names for each typeface family";
+        type = attrsOf (listOf str);
+        default = null;
+        example = {
+          serif = [
+            "Ubuntu"
+          ];
+          sansSerif = [
+            "Liberation"
+            "Noto"
+          ];
+          monospace = [
+            "Hack"
+          ];
+        };
+      };
     };
   };
 
   config = mkIf cfg.enable {
     fonts = {
-      packages = if (builtins.length cfg.nerd != 0)
+      packages =
+        if (builtins.length cfg.nerd != 0)
         then cfg.ttf ++ [
           (pkgs.nerdfonts.override { fonts = cfg.nerd; })
         ]
 
         else cfg.ttf;
+
+      fontconfig = mkIf (cfg.defaults != null) {
+        enable = true;
+        defaultFonts = cfg.defaults;
+      };
     };
   };
 }
