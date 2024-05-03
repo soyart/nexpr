@@ -34,37 +34,27 @@ in {
         ];
       };
 
-      # familyDefaults = let example = [
-      #   "Ubuntu"
-      # ];
-      # in {
-      #   serif = mkOption {
-      #     description = "List of font names (not package names)";
-      #     type = str;
-      #     inherit example;
-      #   };
-      #   sansSerif = mkOption {
-      #     description = "List of font names (not package names)";
-      #     type = str;
-      #     inherit example;
-      #   };
-      #   monospace = mkOption {
-      #     description = "List of font names (not package names)";
-      #     type = str;
-      #     inherit example;
+      # defaults = mkOption {
+      #   description = "Default font names for each typeface family";
+      #   type = nullOr attrsOf str;
+      #   default = {};
+      #   example = {
+      #     serif = "Ubuntu";
+      #     sansSerif = "Liberation";
+      #     monospace = "Hack";
       #   };
       # };
     };
   };
 
   config = mkIf cfg.enable {
-    fonts = let
-      fontsNerd = [
-        (pkgs.nerdfonts.override { fonts = cfg.nerd; })
-      ];
-      
-    in {
-      packages = cfg.ttf ++ fontsNerd;
+    fonts = {
+      packages = if (builtins.length cfg.nerd != 0)
+        then cfg.ttf ++ [
+          (pkgs.nerdfonts.override { fonts = cfg.nerd; })
+        ]
+
+        else cfg.ttf;
     };
   };
 }
