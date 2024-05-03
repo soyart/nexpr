@@ -28,13 +28,16 @@ in {
 
     home-manager.users."${username}" = {
       home.packages = with pkgs; [
+        swayidle
+        swaylock
         alacritty # Default terminal in sway config from unix
         wl-clipboard
         brightnessctl
         pulseaudio
         dash
-        swayidle
         lm_sensors
+        wofi
+        dmenu
       ];
 
       home.sessionVariables = {
