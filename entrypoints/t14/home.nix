@@ -19,9 +19,9 @@
         inconsolata
         liberation_ttf
       ];
-      # nerdFonts = [
-      #   "Hack"
-      # ];
+      nerd = [
+        "Hack"
+      ];
       # familyDefaults = {
       #   sansSerif = "Liberation";
       #   monospace = "Hack";

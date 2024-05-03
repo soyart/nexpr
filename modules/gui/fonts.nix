@@ -24,17 +24,15 @@ in {
         ];
       };
 
-      # nerdFonts = mkOption {
-      #   description = "Nerd Font names for override";
-      #   type = listOf str;
-      #   default = [
-      #     "Hack"
-      #   ];
-      #   example = [
-      #     "Hack"
-      #     "Inconsolata"
-      #   ];
-      # };
+      nerd = mkOption {
+        description = "Nerd Fonts for override";
+        type = listOf str;
+        default = [];
+        example = [
+          "Hack"
+          "Inconsolata"
+        ];
+      };
 
       # familyDefaults = let example = [
       #   "Ubuntu"
@@ -60,17 +58,13 @@ in {
   };
 
   config = mkIf cfg.enable {
-    fonts.packages = cfg.ttf;
-    # fonts = let
-    #   fontsNerd = (pkgs.nerdfonts.override {
-    #     fonts = cfg.nerdFonts;
-    #   });
-    # in {
-    #   packages = cfg.ttf ++ fontsNerd;
+    fonts = let
+      fontsNerd = [
+        (pkgs.nerdfonts.override { fonts = cfg.nerd; })
+      ];
       
-    #   # fontconfig = {
-    #   #   defaultFonts = cfg.familyDefaults;
-    #   # };
-    # };
+    in {
+      packages = cfg.ttf ++ fontsNerd;
+    };
   };
 }
