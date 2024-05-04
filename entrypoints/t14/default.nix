@@ -7,8 +7,7 @@
       ../../modules/net/iwd.nix
       ../../modules/net/unbound.nix
 
-      ../../modules/packages.nix
-
+      ../../modules/syspkgs.nix
       ../../modules/main-user.nix
       ../../modules/doas.nix
       ../../modules/ramdisk.nix
@@ -82,7 +81,7 @@
       };
     };
 
-    packages = [
+    syspkgs = [
       ../../packages/base
       ../../packages/devel
       ../../packages/net

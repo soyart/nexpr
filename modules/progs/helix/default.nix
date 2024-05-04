@@ -11,7 +11,7 @@ in {
     nexpr.progs.helix = {
       enable = mkEnableOption "Enable Helix editor from Nexpr";
       langServers = mkOption {
-        description = "List of LSP Nix packages";
+        description = "List of LSP Nix packages only available to Helix";
         type = listOf package;
         default = with pkgs; [
           nil
