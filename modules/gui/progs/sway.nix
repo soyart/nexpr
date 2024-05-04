@@ -3,11 +3,11 @@
 with lib;
 
 let
-  cfg = config.nexpr.gui.sway;
+  cfg = config.nexpr.gui.progs.sway;
 
 in {
   options = {
-    nexpr.gui.sway = {
+    nexpr.gui.progs.sway = {
       enable = mkEnableOption "Enable Sway DM with config from packages/drvs/unix";
     };
   };
@@ -28,20 +28,20 @@ in {
 
     home-manager.users."${username}" = {
       home.packages = with pkgs; [
+        swayidle
+        swaylock
         alacritty # Default terminal in sway config from unix
         wl-clipboard
         brightnessctl
         pulseaudio
         dash
-        swayidle
         lm_sensors
+        wofi
+        dmenu
       ];
-
-      programs.bash.enable = true;
 
       home.sessionVariables = {
         WAYLAND = "1";
-        MOZ_ENABLE_WAYLAND = "1";
         XDG_SESSION_TYPE = "wayland";
         XDG_CURRENT_DESKTOP = "sway";
       };
@@ -57,8 +57,8 @@ in {
           recursive = true;
         };
 
-        ".config/alacritty" = {
-          source = "${unix}/dotfiles/pkg/alacritty/.config/alacritty";
+        ".config/wofi" = {
+          source = "${unix}/dotfiles/linux/.config/wofi";
           recursive = true;
         };
 
@@ -67,8 +67,14 @@ in {
           recursive = true;
         };
 
+        # @TODO: separate module
+        ".config/alacritty" = {
+          source = "${unix}/dotfiles/pkg/alacritty/.config/alacritty";
+          recursive = true;
+        };
+
         "wall" = {
-          source = ./wall;
+          source = ../wall;
           recursive = true;
         };
       };

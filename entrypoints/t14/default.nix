@@ -6,7 +6,9 @@
 
       ../../modules/net/iwd.nix
       ../../modules/net/unbound.nix
+
       ../../modules/packages.nix
+
       ../../modules/main-user.nix
       ../../modules/doas.nix
       ../../modules/ramdisk.nix
@@ -91,4 +93,6 @@
   environment.systemPackages = [
     # Other packages go here
   ];
+
+  services.automatic-timezoned.enable = true;
 }

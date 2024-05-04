@@ -23,7 +23,7 @@ directories:
   > If Nix Flakes are used, entrypoints should
   > contain `flake.nix` and `flake.lock`.
 
-- Modules `modules`
+- [Nexpr modules `modules`](#nexpr-modules)
 
   Modules are general, shared nexpr Nix modules. Entrypoints generally
   import the modules to compose higher-level Nix expressions
@@ -49,9 +49,41 @@ directories:
 
 ### 3. Non-Nix
 
-Nexpr also provides non-Nix files, e.g. directory `./packages`
-which holds text files, each is a list of package names in
-plain text, one package per line.
+Nexpr also provides non-Nix files,
+e.g. directory [`./packages`](./packages) which holds plaintext files,
+each is a list of package names in plain text, one package per line.
+
+## Nexpr modules
+
+Nexpr modules are placed in [`./modules`](./modules).
+
+### Top-level modules
+ 
+Top-level modules (e.g. `./modules/doas.nix`) are ones that declare
+their own options under `options.nexpr`.
+
+They all are system configuration modules.
+
+### Group modules
+
+Group modules are grouped together by their common category,
+e.g. `./modules/net` which defines network configuration,
+or `./modules/gui` which defines GUI environment.
+
+Unlike top-level modules, these modules may contain not only
+system configuration, but also Home Manager configuration.
+Some may even touch both.
+
+There are 2 flavors of these - single-file modules
+(e.g. `./modules/progs/git`) and directory modules
+(e.g. `./modules/progs/helix/`).
+
+Group modules follow the same option naming convention for
+nexpr top-level modules. For example, file `./modules/foo/bar.nix`
+will declare its options under `nexpr.foo.bar`.
+
+Some group modules may not define any of their own options
+and function more like a hook.
 
 ## Nexpr location
 
