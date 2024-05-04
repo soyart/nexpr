@@ -14,6 +14,7 @@
       ../../modules/ramdisk.nix
 
       ./home.nix
+      ./hardware.nix
   ];
 
   nix.settings.experimental-features = [
