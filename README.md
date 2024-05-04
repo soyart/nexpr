@@ -85,8 +85,6 @@ will declare its options under `nexpr.foo.bar`.
 Some group modules may not define any of their own options
 and function more like a hook.
 
-### Module groups
-
 ## Nexpr location
 
 We can just have NixOS configuration directly import

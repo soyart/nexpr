@@ -57,13 +57,19 @@ in {
           recursive = true;
         };
 
-        ".config/alacritty" = {
-          source = "${unix}/dotfiles/pkg/alacritty/.config/alacritty";
+        ".config/wofi" = {
+          source = "${unix}/dotfiles/linux/.config/wofi";
           recursive = true;
         };
 
         "bin" = {
           source = "${unix}/sh-tools/bin";
+          recursive = true;
+        };
+
+        # @TODO: separate module
+        ".config/alacritty" = {
+          source = "${unix}/dotfiles/pkg/alacritty/.config/alacritty";
           recursive = true;
         };
 
