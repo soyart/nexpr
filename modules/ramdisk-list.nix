@@ -14,12 +14,14 @@ in {
         mnt = mkOption { type = str; };
         perm = mkOption { type = str; default = "755"; };
         size = mkOption { type = nullOr str; default = null; };
+        owner = mkOption { type = str; default = "root"; };
+        group = mkOption { type = str; default = "root"; };
       };
     });
     example = [
       { mnt = "/rd1"; }
-      { mnt = "/rd2"; size = "500M";}
       { mnt = "/rd2"; size = "1G"; perm = 744; }
+      { mnt = "/rd3"; size = "500M"; group = "root"; }
     ];
   };
 
@@ -28,10 +30,10 @@ in {
       "${c.mnt}" = {
         device = "none";
         fsType = "tmpfs";
-        options = let
-          mntOpts = [ "defaults"  "mode=${c.perm}" ];
-        in
-        if c.size == null then mntOpts else mntOpts ++ ["size=${c.size}"];
+        options = [ "defaults"  "mode=${c.perm}" ]
+        ++ lib.optional (value.size != null) "size=${value.size}"
+        ++ lib.optional (value.owner != null) "uid=${value.owner}"
+        ++ lib.optional (value.group != null) "gid=${value.group}";
       };
     };
     

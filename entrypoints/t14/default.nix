@@ -51,7 +51,10 @@
   nexpr = {
     ramDisks = {
       "/tmp" = {};
-      "/rd".size = "2G";
+      "/rd" = {
+        size = "2G";  
+        group = username;
+      };
     };
 
     mainUser = {
