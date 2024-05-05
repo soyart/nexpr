@@ -13,7 +13,10 @@ in {
   };
 
   config = mkIf cfg.enable {
-    security.polkit.enable = true;
+    security = {
+      polkit.enable = true;
+      pam.services.swaylock = {};
+    };
 
     users.users."${username}" = {
       extraGroups = [ "audio"  "video" ];
