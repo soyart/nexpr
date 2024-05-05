@@ -3,13 +3,9 @@
 {
   imports = [
     inputs.home-manager.nixosModules.home-manager
-    ../../modules/progs/git
-    ../../modules/progs/helix
 
-    ../../modules/gui/fonts.nix
-    ../../modules/gui/progs/sway.nix
-    ../../modules/gui/progs/firefox
-
+    ../../modules/gui
+    ../../modules/progs
     ../../modules/langs
   ];
 
@@ -47,6 +43,10 @@
     gui = {
       progs = {
         sway.enable = true;
+        firefox = {
+          enable = true;
+          withPipewire = true;
+        };
       };
 
       fonts = {

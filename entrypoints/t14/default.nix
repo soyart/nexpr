@@ -2,18 +2,16 @@
 
 {
   imports = [
+      ./home.nix
+      ./hardware.nix
+
       ../../hosts/t14/configuration.nix
 
-      ../../modules/net/iwd.nix
-      ../../modules/net/unbound.nix
-
+      ../../modules/net
       ../../modules/syspkgs.nix
       ../../modules/main-user.nix
       ../../modules/doas.nix
       ../../modules/ramdisk.nix
-
-      ./home.nix
-      ./hardware.nix
   ];
 
   nix.settings.experimental-features = [

@@ -1,0 +1,9 @@
+
+{ ... }:
+
+{
+  imports = [
+    ./firefox
+    ./sway.nix
+  ];
+}
