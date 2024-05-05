@@ -76,6 +76,7 @@
 
     langs = {
       go.enable = true;
+      rust.enable = true;
     };
   };
 }
