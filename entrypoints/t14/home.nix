@@ -3,13 +3,14 @@
 {
   imports = [
     inputs.home-manager.nixosModules.home-manager
-
     ../../modules/progs/git
     ../../modules/progs/helix
 
     ../../modules/gui/fonts.nix
     ../../modules/gui/progs/sway.nix
     ../../modules/gui/progs/firefox
+
+    ../../modules/langs
   ];
 
   home-manager = {
@@ -40,12 +41,6 @@
 
       helix = {
         enable = true;  
-        langServers = with pkgs; [
-          nil
-          gopls
-          marksman
-          rust-analyzer
-        ];
       };
     };
 
@@ -77,6 +72,11 @@
           ];
         };
       };
+    };
+
+    langs = {
+      go.enable = true;
+      rust.enable = true;
     };
   };
 }

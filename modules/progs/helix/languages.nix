@@ -54,7 +54,7 @@
       ];
     }
     {
-      name = "rust"; 
+      name = "rust";
       auto-format = true;
       indent = {
         tab-width = 4;
