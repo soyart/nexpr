@@ -14,6 +14,7 @@ let
 
     rust = with pkgs; [
       cargo
+      rustfmt
       rust-analyzer
     ];
   };
