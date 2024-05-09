@@ -6,6 +6,10 @@ let
   cfg = config.nexpr.gui.progs.sway;
 
 in {
+  imports = [
+    ../../sound.nix    
+  ];
+
   options = {
     nexpr.gui.progs.sway = {
       enable = mkEnableOption "Enable Sway DM with config from packages/drvs/unix";
@@ -22,10 +26,7 @@ in {
       extraGroups = [ "audio"  "video" ];
     };
 
-    sound.enable = true;
-
     hardware = {
-      pulseaudio.enable = true;
       opengl.enable = true;
     };
 
@@ -36,7 +37,6 @@ in {
         alacritty # Default terminal in sway config from unix
         wl-clipboard
         brightnessctl
-        pulseaudio
         dash
         lm_sensors
         wofi
