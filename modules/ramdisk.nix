@@ -30,10 +30,13 @@ in {
 
   config = let
     mapFn = key: value: let
-      mntOpts = ["defaults" "mode=${value.perm}"]
-        ++ lib.optional (value.size != null) "size=${value.size}"
-        ++ lib.optional (value.owner != null) "uid=${value.owner}"
-        ++ lib.optional (value.group != null) "gid=${value.group}";
+      mntOpts = [
+        "defaults"
+        "mode=${value.perm}"
+        "uid=${value.owner}"
+        "gid=${value.group}"
+      ]
+      ++ lib.optional (value.size != null) "size=${value.size}";
 
     in {
       device = "none";

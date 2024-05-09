@@ -13,9 +13,9 @@ in {
       options = {
         mnt = mkOption { type = str; };
         perm = mkOption { type = str; default = "755"; };
-        size = mkOption { type = nullOr str; default = null; };
         owner = mkOption { type = str; default = "root"; };
         group = mkOption { type = str; default = "root"; };
+        size = mkOption { type = nullOr str; default = null; };
       };
     });
     example = [
@@ -30,10 +30,13 @@ in {
       "${c.mnt}" = {
         device = "none";
         fsType = "tmpfs";
-        options = [ "defaults"  "mode=${c.perm}" ]
-        ++ lib.optional (value.size != null) "size=${value.size}"
-        ++ lib.optional (value.owner != null) "uid=${value.owner}"
-        ++ lib.optional (value.group != null) "gid=${value.group}";
+        options = [
+          "defaults"
+          "mode=${value.perm}"
+          "uid=${value.owner}"
+          "gid=${value.group}"
+        ]
+        ++ lib.optional (value.size != null) "size=${value.size}";
       };
     };
     

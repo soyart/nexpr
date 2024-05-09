@@ -48,10 +48,13 @@
 
   nexpr = {
     ramDisks = {
-      "/tmp" = {};
+      "/tmp" = {
+        group = "wheel";
+      };
       "/rd" = {
         size = "2G";  
         group = username;
+        owner = username;
       };
     };
 
