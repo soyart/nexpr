@@ -27,7 +27,7 @@ in {
     };
 
     hardware = {
-      opengl.enable = true;
+      graphics.enable = true;
     };
 
     home-manager.users."${username}" = {
