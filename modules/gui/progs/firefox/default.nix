@@ -11,7 +11,6 @@ in {
   options = {
     nexpr.gui.progs.firefox = {
       enable = mkEnableOption "Enable Firefox (Wayland-only)";
-      # @TODO: not working on sway yet
       withPipewire = mkOption {
         description = "Enable Pipewire support in Firefox (i.e. for screen sharing and web conferences)";
         type = bool;

@@ -67,7 +67,7 @@
       enable = true;
       keepSudo = false;
       settings = {
-          users = [ username];
+          users = [ username ];
           keepEnv = true;
           persist = true;
       };
