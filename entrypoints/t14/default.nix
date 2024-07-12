@@ -19,6 +19,10 @@
     "flakes"
   ]; 
 
+  nix.optimise = {
+    automatic = true;
+  };
+
   # Blacklist some driver modules
   boot.blacklistedKernelModules = [
     "btusb"
