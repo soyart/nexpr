@@ -56,6 +56,8 @@
           hack-font
           inconsolata
           liberation_ttf
+
+          tlwg # Thai font
         ];
 
         nerd = [

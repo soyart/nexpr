@@ -41,6 +41,10 @@ in {
         lm_sensors
         wofi
         dmenu
+
+        (writeShellScriptBin "sndctl" ''
+          ${builtins.readFile "${unix}/sh-tools/bin/sndctl-wireplumber"}
+        '')
       ];
 
       home.sessionVariables = {
