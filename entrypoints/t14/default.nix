@@ -87,6 +87,13 @@
           "9.9.9.9@853#dns.quad9.net"
         ];
       };
+
+      firewall = {
+        enable = true;
+        global = {
+          allowPing = false;
+        };
+      };
     };
 
     syspkgs = [
