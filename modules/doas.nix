@@ -1,4 +1,4 @@
-{ lib, config, ... }:
+{ lib, config, pkgs, ... }:
 
 with lib;
 with lib.types;
@@ -47,5 +47,9 @@ in {
       keepEnv = cfg.settings.keepEnv;
       persist = cfg.settings.persist;
     }];
+
+    environment.systemPackages = with pkgs; [
+      doas-sudo-shim
+    ];
   };
 }
