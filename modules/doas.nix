@@ -8,7 +8,7 @@ let
 
 in {
   options.nexpr.doas = {
-    enable = mkEnableOption "Enable doas";
+    enable = mkEnableOption "Globally enable doas";
 
     keepSudo = mkOption {
       type = bool;

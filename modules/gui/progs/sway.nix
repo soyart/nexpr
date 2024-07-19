@@ -7,7 +7,7 @@ let
 
 in {
   imports = [
-    ../../sound.nix    
+    ../sound.nix    
   ];
 
   options = {

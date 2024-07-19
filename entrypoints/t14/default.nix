@@ -10,7 +10,7 @@
       ../../modules/net
       ../../modules/syspkgs.nix
       ../../modules/main-user.nix
-      ../../modules/doas.nix
+      ../../modules/doas.nix # Do as is considered a system setting
       ../../modules/ramdisk.nix
   ];
 
