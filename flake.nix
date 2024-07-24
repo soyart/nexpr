@@ -17,25 +17,10 @@
     };
   };
 
-  outputs = { self, nixpkgs, unix, ... }@inputs : with nixpkgs.lib;
-    let
-      hostname = "nexpr-t14";
-      username = "artnoi";
-
-    in {
-      nixosConfigurations."${hostname}" = nixosSystem {
-        system = "x86_64-linux";
-        modules = [
-          ./default.nix
-        ];
-
-        specialArgs = {
-          inherit
-            inputs
-            hostname
-            username
-            unix;
-        };
-      };
+  outputs = inputs@{ ... }: {
+    homeConfigurations = import ./home { inherit inputs; };
+    nixosConfigurations = import ./nixos { inherit inputs; };
   };
+
+  nixConfig = {};
 }

@@ -1,17 +1,15 @@
-{ pkgs, hostname, username, ... }:
+{ pkgs, hostname, mainUser, ... }:
 
 {
   imports = [
-      ./home.nix
       ./hardware.nix
+      ./configuration.nix
 
-      ../../hosts/t14/configuration.nix
-
-      ../../modules/net
-      ../../modules/syspkgs.nix
-      ../../modules/main-user.nix
-      ../../modules/doas.nix # Do as is considered a system setting
-      ../../modules/ramdisk.nix
+      ../../../modules/net
+      ../../../modules/syspkgs.nix
+      ../../../modules/main-user.nix
+      ../../../modules/doas.nix # doas is considered a system setting
+      ../../../modules/ramdisk.nix
   ];
 
   nix.settings.experimental-features = [
@@ -57,21 +55,21 @@
       };
       "/rd" = {
         size = "2G";  
-        group = username;
-        owner = username;
+        group = mainUser;
+        owner = mainUser;
       };
     };
 
     mainUser = {
       enable = true;
-      username = username;
+      username = mainUser;
     };
 
     doas = {
       enable = true;
       keepSudo = false;
       settings = {
-          users = [ username ];
+          users = [ mainUser ];
           keepEnv = true;
           persist = true;
       };
@@ -97,11 +95,11 @@
     };
 
     syspkgs = [
-      ../../packages/base
-      ../../packages/devel
-      ../../packages/net
-      ../../packages/laptop
-      ../../packages/nix-extras
+      ../../../packages/base
+      ../../../packages/devel
+      ../../../packages/net
+      ../../../packages/laptop
+      ../../../packages/nix-extras
     ];
   };
 

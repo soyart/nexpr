@@ -4,9 +4,9 @@
   imports = [
     inputs.home-manager.nixosModules.home-manager
 
-    ../../modules/gui
-    ../../modules/progs
-    ../../modules/langs
+    ../../../modules/gui
+    ../../../modules/progs
+    ../../../modules/langs
   ];
 
   home-manager = {

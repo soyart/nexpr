@@ -1,9 +1,10 @@
-{ lib, config, pkgs, username, unix, ... }:
+{ lib, config, pkgs, username, inputs, ... }:
 
 with lib;
 
 let
   cfg = config.nexpr.gui.progs.sway;
+  unix = inputs.unix;
 
 in {
   imports = [
@@ -12,7 +13,7 @@ in {
 
   options = {
     nexpr.gui.progs.sway = {
-      enable = mkEnableOption "Enable Sway DM with config from packages/drvs/unix";
+      enable = mkEnableOption "Enable Sway DM with config from gitlab.com/artnoi/unix";
     };
   };
 
