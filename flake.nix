@@ -1,6 +1,11 @@
 {
   description = "NixOS configuration";
 
+  outputs = inputs@{ ... }: {
+    homeConfigurations = import ./home { inherit inputs; };
+    nixosConfigurations = import ./nixos { inherit inputs; };
+  };
+
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
@@ -15,11 +20,6 @@
       ref = "tmp/sndctl";
       flake = false;
     };
-  };
-
-  outputs = inputs@{ ... }: {
-    homeConfigurations = import ./home { inherit inputs; };
-    nixosConfigurations = import ./nixos { inherit inputs; };
   };
 
   nixConfig = {};

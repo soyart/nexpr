@@ -11,7 +11,7 @@ let
     hostname ? "nexpr",
     stateVersion ? "23.11",
     system ? "x86_64-linux",
-    disk ? ./disks/thinkpad.nix,
+    # disk ? ./disks/thinkpad.nix,
   }: nixosSystem {
     inherit system modules;
 
@@ -23,7 +23,7 @@ let
     # specialArgs = { inherit inputs disk stateVersion; };
   };
 in {
-  nexpr-t14 = mkHost {
+  "nexpr-t14" = mkHost {
     hostname = "nexpr-t14";
     mainUser = "artnoi";
     modules = [
