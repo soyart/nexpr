@@ -103,6 +103,7 @@
     ];
   };
 
+  programs.nano.enable = false;
   environment.systemPackages = [
     # Other packages go here
   ];

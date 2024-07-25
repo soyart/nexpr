@@ -1,4 +1,4 @@
-{ lib, config, username, hostname, ... }:
+{ lib, pkgs, config, username, hostname, ... }:
 
 with lib;
 with lib.types;
@@ -10,6 +10,7 @@ in {
   options = {
     nexpr.progs.git = {
       enable = mkEnableOption "Enable nexpr Git";
+
       withLfs = mkOption {
         description = "Enable Git LFS support";
         type = bool;
@@ -27,21 +28,50 @@ in {
         type = str;
         default = "${username}@${hostname}";
       };
+
+      editor = mkOption {
+        type = submodule {
+          options.package = mkOption {
+            description = "Nix package to for git $EDITOR program";
+            type = package;
+            default = pkgs.helix;
+          };
+
+          options.binPath = mkOption {
+            description = "Path to executable from the derivation root of package";
+            type = str // {
+              check = (s: (builtins.stringLength s) != 0);
+            };
+            default = "bin/hx";
+          };
+        };
+      };
     };
   };
 
-  config = mkIf cfg.enable {
-    home-manager.users."${username}" = {
-      programs.git = {
-        enable = true;
-        lfs.enable = cfg.withLfs;
+  config = (mkIf cfg.enable) {
+    home-manager.users."${username}" =
+      let editor = cfg.editor;
 
-        userName = cfg.username;
-        userEmail = cfg.email;
+    in {
+      home.sessionVariables = {
+        EDITOR = "${editor.package.outPath}/${editor.binPath}"; 
+      };
 
-        extraConfig = {
-          push = {
-            autoSetupRemote = true;  
+      programs = {
+        ${editor.package.pname}.enable = true;        
+
+        git = {
+          enable = true;
+          lfs.enable = cfg.withLfs;
+
+          userName = cfg.username;
+          userEmail = cfg.email;
+
+          extraConfig = {
+            push = {
+              autoSetupRemote = true;  
+            };
           };
         };
       };
