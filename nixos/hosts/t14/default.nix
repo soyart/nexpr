@@ -5,11 +5,11 @@
       ./hardware.nix
       ./configuration.nix
 
-      ../../../modules/net
-      ../../../modules/syspkgs.nix
-      ../../../modules/main-user.nix
-      ../../../modules/doas.nix # doas is considered a system setting
-      ../../../modules/ramdisk.nix
+      ../../modules/net
+      ../../modules/syspkgs.nix
+      ../../modules/main-user.nix
+      ../../modules/doas.nix # doas is considered a system setting
+      ../../modules/ramdisk.nix
   ];
 
   nix.settings.experimental-features = [

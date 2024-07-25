@@ -5,7 +5,7 @@ with lib.types;
 
 let
   cfg = config.nexpr.syspkgs;
-  importTxt = import ../libnexpr/import-txt.nix { inherit pkgs; } ;
+  importTxt = import ../../libnexpr/import-txt.nix { inherit pkgs; } ;
 
 in {
   options.nexpr.syspkgs = mkOption {
