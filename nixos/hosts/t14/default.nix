@@ -10,6 +10,8 @@
       ../../modules/main-user.nix
       ../../modules/doas.nix # doas is considered a system setting
       ../../modules/ramdisk.nix
+
+      ../../../defaults/net
   ];
 
   nix.settings.experimental-features = [
@@ -77,21 +79,6 @@
 
     net = {
       iwd.enable = true;
-      unboundDoT = {
-        enable = true;
-        nameserversDoT = [
-          "1.1.1.1@853#one.one.one.one"
-          "1.0.0.1@853#one.one.one.one"
-          "9.9.9.9@853#dns.quad9.net"
-        ];
-      };
-
-      firewall = {
-        enable = true;
-        global = {
-          allowPing = false;
-        };
-      };
     };
 
     syspkgs = [

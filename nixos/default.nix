@@ -29,14 +29,25 @@ in {
     modules = [
       ./hosts/t14
 
+      # Home NixOS module, injected with username
+
       ({...}@args: {
         imports = [
-          ../home/presets/sway-dev
+          inputs.home-manager.nixosModules.home-manager
+
+          # ../defaults/hm.nix
+          ../presets/sway-dev
         ];
 
         config._module.args = {
           inherit args;
           username = "artnoi";
+        };
+
+        config.home-manager = {
+          useGlobalPkgs = true;
+          useUserPackages = true;
+          extraSpecialArgs = { inherit inputs; };
         };
       })
     ];
