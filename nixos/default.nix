@@ -26,27 +26,31 @@ in {
   "nexpr-t14" = mkHost {
     hostname = "nexpr-t14";
     mainUser = "artnoi";
-    modules = [
-      # Use home-manager as NixOS modules
-      inputs.home-manager.nixosModules.home-manager
 
+    modules = [
       ./hosts/t14
 
-      # WIP: inject username
-      ({...}@args: {
+      # Use home-manager as NixOS modules
+      ({ inputs, config, ... }: {
         imports = [
-          ../presets/sway-dev
+          inputs.home-manager.nixosModules.home-manager
         ];
-
-        config._module.args = {
-          inherit args;
-          username = "artnoi";
-        };
 
         config.home-manager = {
           useGlobalPkgs = true;
           useUserPackages = true;
           extraSpecialArgs = { inherit inputs; };
+        };
+      })
+
+      # WIP: inject username
+      ({ config, ... }: {
+        imports = [
+          ../presets/sway-dev
+        ];
+
+        config._module.args = {
+          username = "artnoi";
         };
       })
     ];
