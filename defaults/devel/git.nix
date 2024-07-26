@@ -1,8 +1,10 @@
+username:
+
 { pkgs, ... }:
 
 {
   imports = [
-    ../../home/modules/progs/git
+    (import ../../home/modules/progs/git username)
   ];
 
   nexpr.progs.git = {

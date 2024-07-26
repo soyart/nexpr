@@ -43,16 +43,7 @@ in {
         };
       })
 
-      # WIP: inject username
-      ({ config, ... }: {
-        imports = [
-          ../presets/sway-dev
-        ];
-
-        config._module.args = {
-          username = "artnoi";
-        };
-      })
+      (import ../presets/sway-dev "artnoi")
     ];
   };
 }

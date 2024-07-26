@@ -1,8 +1,10 @@
+username:
+
 { ... }:
 
 {
   imports = [
-    ../../home/modules/gui/progs/firefox
+    (import ../../home/modules/gui/progs/firefox username)
   ];
 
   nexpr.gui.progs.firefox = {

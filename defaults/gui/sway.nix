@@ -1,8 +1,10 @@
+username:
+
 { ... }:
 
 {
   imports = [
-    ../../home/modules/gui/progs/sway.nix
+    (import ../../home/modules/gui/progs/sway.nix username)
   ];
 
   nexpr.gui.progs.sway.enable = true;

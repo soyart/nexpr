@@ -1,8 +1,10 @@
+username:
+
 { ... }:
 
 {
   imports = [
-    ../../home/modules/langs
+    (import ../../home/modules/langs username)
   ];
 
   nexpr.langs = {

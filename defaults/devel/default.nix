@@ -1,9 +1,11 @@
+username:
+
 { ... }:
 
 {
   imports = [
-    ./git.nix
-    ./langs.nix
-    ./helix.nix
+    (import ./git.nix username)
+    (import ./langs.nix username) 
+    (import ./helix.nix username)
   ];
 }
