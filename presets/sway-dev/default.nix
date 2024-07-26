@@ -3,9 +3,6 @@
 {
   imports = [
     ../../defaults/bash.nix    
-
-    ../../defaults/devel
-    ../../defaults/devel
     ../../defaults/devel
 
     ../../defaults/gui/sway.nix
