@@ -25,7 +25,7 @@ in {
     };
   };
 
-  config = {
+  config = mkIf cfg.enable {
     home-manager.users."${username}" = {
       programs.helix = {
         enable = true;
