@@ -27,15 +27,14 @@ in {
     hostname = "nexpr-t14";
     mainUser = "artnoi";
     modules = [
+      # Use home-manager as NixOS modules
+      inputs.home-manager.nixosModules.home-manager
+
       ./hosts/t14
 
-      # Home NixOS module, injected with username
-
+      # WIP: inject username
       ({...}@args: {
         imports = [
-          inputs.home-manager.nixosModules.home-manager
-
-          # ../defaults/hm.nix
           ../presets/sway-dev
         ];
 
