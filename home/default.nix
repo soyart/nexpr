@@ -18,11 +18,11 @@ let
     extraSpecialArgs = { inherit inputs username stateVersion; };
   };
 in {
-  "artnoi@nexpr-t14" = mkHome {
+  "artnoi@nexpr-t14" = mkHome rec {
     username = "artnoi";
     modules = [
       ../defaults/hm.nix
-      ../presets/sway-dev
+      (import ../presets/sway-dev username)
     ];
   };
 }

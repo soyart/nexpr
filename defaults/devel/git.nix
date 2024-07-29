@@ -7,7 +7,7 @@ username:
     (import ../../home/modules/progs/git username)
   ];
 
-  nexpr.per-user."${username}".progs.git = {
+  nexpr.home."${username}".progs.git = {
     enable = true;
     withLfs = false;
     username = "soyart";  

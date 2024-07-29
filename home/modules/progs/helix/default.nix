@@ -6,11 +6,11 @@ with lib;
 with lib.types;
 
 let
-  cfg = config.nexpr.per-user."${username}".progs.helix;
+  cfg = config.nexpr.home."${username}".progs.helix;
 
 in {
   options = {
-    nexpr.per-user."${username}".progs.helix = {
+    nexpr.home."${username}".progs.helix = {
       enable = mkEnableOption "Enable Helix editor from Nexpr";
       langServers = mkOption {
         description = "List of LSP Nix packages only available to Helix";

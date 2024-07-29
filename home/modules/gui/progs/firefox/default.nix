@@ -6,13 +6,13 @@ with lib;
 with lib.types;
 
 let
-  perUser = config.nexpr.per-user."${username}";
+  perUser = config.nexpr.home."${username}";
   cfg = perUser.gui.progs.firefox;
   cfgSway = perUser.gui.progs.sway;
 
 in {
   options = {
-    nexpr.per-user."${username}".gui.progs.firefox = {
+    nexpr.home."${username}".gui.progs.firefox = {
       enable = mkEnableOption "Enable Firefox (Wayland-only)";
       withPipewire = mkOption {
         description = "Enable Pipewire support in Firefox (i.e. for screen sharing and web conferences)";
