@@ -7,5 +7,5 @@ username:
     (import ../../home/modules/progs/helix username)
   ];
 
-  nexpr.progs.helix.enable = true;
+  nexpr.per-user."${username}".progs.helix.enable = true;
 }

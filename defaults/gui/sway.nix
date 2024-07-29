@@ -7,5 +7,5 @@ username:
     (import ../../home/modules/gui/progs/sway.nix username)
   ];
 
-  nexpr.gui.progs.sway.enable = true;
+  nexpr.per-user."${username}".gui.progs.sway.enable = true;
 }

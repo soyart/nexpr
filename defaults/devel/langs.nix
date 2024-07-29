@@ -7,7 +7,7 @@ username:
     (import ../../home/modules/langs username)
   ];
 
-  nexpr.langs = {
+  nexpr.per-user."${username}".langs = {
     go.enable = true;
     rust.enable = true;
   };

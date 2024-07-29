@@ -7,7 +7,7 @@ username:
     (import ../../home/modules/gui/progs/firefox username)
   ];
 
-  nexpr.gui.progs.firefox = {
+  nexpr.per-user."${username}".gui.progs.firefox = {
     enable = true;
     withPipewire = true;
   };

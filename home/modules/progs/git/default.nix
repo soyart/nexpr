@@ -6,11 +6,11 @@ with lib;
 with lib.types;
 
 let
-  cfg = config.nexpr.progs.git;
+  cfg = config.nexpr.per-user."${username}".progs.git;
 
 in {
   options = {
-    nexpr.progs.git = {
+    nexpr.per-user."${username}".progs.git = {
       enable = mkEnableOption "Enable nexpr Git";
 
       withLfs = mkOption {
