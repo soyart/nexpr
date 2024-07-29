@@ -28,8 +28,17 @@ let
     };
   };
 
+  # Create a list of mod, with a new key "name".
+  # e.g. If we have this config:
+  #
+  # { go = { enable=true; systemPackage=true;}; rust = { enable=true; systemPackage=true; }; }
+  #
+  # Then langList will be a list with 2 elements:
+  #
+  # [ {name=go; enable=true; systemPackage=true}; {name=rust; enable=true; systemPackage=true;} ]
+  #
   langList = (langCfgs:
-    mapAttrsFlatten
+    mapAttrsToList
       (key: val: val // { name = key; })
     langCfgs
   );
@@ -52,12 +61,12 @@ let
 
 in {
   options.nexpr.home."${username}".langs = mkOption {
-      description = "Programming languages to install";
-      type = attrsOf (submodule mod);
-      default = {
-        enable = false;
-        systemPackage = false;
-      };
+    description = "Programming languages to install";
+    type = attrsOf (submodule mod);
+    default = {
+      enable = false;
+      systemPackage = false;
+    };
   };
   
   config = 

@@ -5,50 +5,42 @@
       ./hardware.nix
       ./configuration.nix
 
+      ../../../defaults/nix
+      ../../../defaults/net
+
       ../../modules/net
       ../../modules/syspkgs.nix
       ../../modules/main-user.nix
       ../../modules/doas.nix # doas is considered a system setting
       ../../modules/ramdisk.nix
-
-      ../../../defaults/net
   ];
-
-  nix.settings.experimental-features = [
-    "nix-command"
-    "flakes"
-  ]; 
-
-  nix.optimise = {
-    automatic = true;
-  };
-
-  # Blacklist some driver modules
-  boot.blacklistedKernelModules = [
-    "btusb"
-    "bluetooth"
-    "uvcvideo"
-  ];
-
-  hardware.bluetooth = {
-    enable = false;
-    powerOnBoot = false;
-  };
-
-  # Use the systemd-boot EFI boot loader.
-  boot.loader.grub.enable = false;
-  boot.loader.systemd-boot.enable = true;
-  boot.loader.efi.canTouchEfiVariables = true;
-  boot.kernelPackages = pkgs.linuxPackages_latest;
-  boot.initrd.luks.devices = {
-    crypted = {
-      device = "/dev/disk/by-uuid/31e319df-c4fe-48f5-82f5-49c7a5503119";
-      preLVM = true;
-      allowDiscards = true;
-    };   
-  };
 
   networking.hostName = hostname;
+
+  boot = {
+    kernelPackages = pkgs.linuxPackages_latest;
+
+    blacklistedKernelModules = [
+      "btusb"
+      "bluetooth"
+      "uvcvideo"
+    ];
+
+    # Use the systemd-boot EFI boot loader.
+    loader = {
+      grub.enable = false;
+      systemd-boot.enable = true;
+      efi.canTouchEfiVariables = true;
+    };
+
+    initrd.luks.devices = {
+      crypted = {
+        device = "/dev/disk/by-uuid/31e319df-c4fe-48f5-82f5-49c7a5503119";
+        preLVM = true;
+        allowDiscards = true;
+      };
+    };
+  };
 
   nexpr = {
     ramDisks = {
@@ -90,10 +82,11 @@
     ];
   };
 
-  programs.nano.enable = false;
   environment.systemPackages = [
     # Other packages go here
   ];
+
+  programs.nano.enable = false;
 
   services.automatic-timezoned.enable = true;
 }
