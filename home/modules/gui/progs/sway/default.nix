@@ -11,7 +11,7 @@ let
 
 in {
   imports = [
-    ../sound.nix    
+    ../../sound.nix    
   ];
 
   options = {
@@ -85,7 +85,7 @@ in {
         };
 
         "wall" = {
-          source = ../wall;
+          source = ../../wall;
           recursive = true;
         };
       };

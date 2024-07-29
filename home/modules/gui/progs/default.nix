@@ -3,7 +3,7 @@
 
 {
   imports = [
+    ./sway
     ./firefox
-    ./sway.nix
   ];
 }
