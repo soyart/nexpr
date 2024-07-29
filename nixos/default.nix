@@ -22,6 +22,21 @@ let
     # modules = [ sops disko ./shared ] ++ modules; 
     # specialArgs = { inherit inputs disk stateVersion; };
   };
+
+  # Imports home-manager as NixOS modules,
+  # and with defaults home-manager.home config.
+  withDefaultHomeManager = { inputs, config, ... }: {
+    imports = [
+      inputs.home-manager.nixosModules.home-manager
+    ];
+
+    config.home-manager = {
+      useGlobalPkgs = true;
+      useUserPackages = true;
+      extraSpecialArgs = { inherit inputs; };
+    };
+  };
+
 in {
   "nexpr-t14" = mkHost {
     hostname = "nexpr-t14";
@@ -29,19 +44,7 @@ in {
 
     modules = [
       ./hosts/t14
-
-      # Use home-manager as NixOS modules
-      ({ inputs, config, ... }: {
-        imports = [
-          inputs.home-manager.nixosModules.home-manager
-        ];
-
-        config.home-manager = {
-          useGlobalPkgs = true;
-          useUserPackages = true;
-          extraSpecialArgs = { inherit inputs; };
-        };
-      })
+      withDefaultHomeManager
 
       (import ../presets/sway-dev "artnoi")
     ];

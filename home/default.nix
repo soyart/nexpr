@@ -6,7 +6,7 @@ let
   mkHome = {
     modules,
     username,
-    stateVersion ? "23.11",
+    stateVersion ? "24.05",
     system ? "x86_64-linux",
   }: home-manager.lib.homeManagerConfiguration {
     pkgs = import nixpkgs {
@@ -21,7 +21,14 @@ in {
   "artnoi@nexpr-t14" = mkHome rec {
     username = "artnoi";
     modules = [
-      ../defaults/hm.nix
+      ({ inputs, config, ... }: {
+        config.home-manager = {
+          useGlobalPkgs = true;
+          useUserPackages = true;
+          extraSpecialArgs = { inherit inputs; };
+        };
+      })
+
       (import ../presets/sway-dev username)
     ];
   };
