@@ -1,18 +1,21 @@
-{ lib, config, pkgs, username, inputs, ... }:
+username:
+
+{ lib, config, pkgs, inputs, ... }:
 
 with lib;
 
 let
-  cfg = config.nexpr.gui.progs.sway;
+  cfg = config.nexpr.home."${username}".gui.progs.sway;
+
   unix = inputs.unix;
 
 in {
   imports = [
-    ../sound.nix    
+    ../../sound.nix    
   ];
 
   options = {
-    nexpr.gui.progs.sway = {
+    nexpr.home."${username}".gui.progs.sway = {
       enable = mkEnableOption "Enable Sway DM with config from gitlab.com/artnoi/unix";
     };
   };
@@ -82,7 +85,7 @@ in {
         };
 
         "wall" = {
-          source = ../wall;
+          source = ../../wall;
           recursive = true;
         };
       };

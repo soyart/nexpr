@@ -20,7 +20,7 @@ in {
     example = {
       "/rd1" = {};
       "/rd2".size = "500M";
-      "/rd2".owner = username;
+      "/rd2".owner = "userfoo";
       "/rd3" = {
         size = "1G";
         perm = "744";

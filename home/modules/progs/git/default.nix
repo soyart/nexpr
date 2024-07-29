@@ -1,14 +1,16 @@
-{ lib, pkgs, config, username, hostname, ... }:
+username:
+
+{ lib, pkgs, config, hostname, ... }:
 
 with lib;
 with lib.types;
 
 let
-  cfg = config.nexpr.progs.git;
+  cfg = config.nexpr.home."${username}".progs.git;
 
 in {
   options = {
-    nexpr.progs.git = {
+    nexpr.home."${username}".progs.git = {
       enable = mkEnableOption "Enable nexpr Git";
 
       withLfs = mkOption {

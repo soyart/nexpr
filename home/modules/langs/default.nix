@@ -1,10 +1,12 @@
-{ lib, config, pkgs, username, ... }:
+username:
+
+{ lib, config, pkgs, ... }:
 
 with lib;
 with lib.types;
 
 let
-  cfg = config.nexpr.langs;
+  cfg = config.nexpr.home."${username}".langs;
 
   mappings = {
     go = with pkgs; [
@@ -28,7 +30,7 @@ let
 
   langList = (langCfgs:
     mapAttrsFlatten
-      (key: val: val // {name = key;})
+      (key: val: val // { name = key; })
     langCfgs
   );
 
@@ -49,7 +51,7 @@ let
   );
 
 in {
-  options.nexpr.langs = mkOption {
+  options.nexpr.home."${username}".langs = mkOption {
       description = "Programming languages to install";
       type = attrsOf (submodule mod);
       default = {

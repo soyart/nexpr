@@ -1,11 +1,13 @@
+username:
+
 { ... }:
 
 {
   imports = [
-    ../../home/modules/gui/progs/firefox
+    (import ../../home/modules/gui/progs/firefox username)
   ];
 
-  nexpr.gui.progs.firefox = {
+  nexpr.home."${username}".gui.progs.firefox = {
     enable = true;
     withPipewire = true;
   };

@@ -1,11 +1,13 @@
+username:
+
 { pkgs, ... }:
 
 {
   imports = [
-    ../../home/modules/progs/git
+    (import ../../home/modules/progs/git username)
   ];
 
-  nexpr.progs.git = {
+  nexpr.home."${username}".progs.git = {
     enable = true;
     withLfs = false;
     username = "soyart";  

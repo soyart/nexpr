@@ -1,11 +1,13 @@
+username:
+
 { ... }:
 
 {
   imports = [
-    ../../home/modules/langs
+    (import ../../home/modules/langs username)
   ];
 
-  nexpr.langs = {
+  nexpr.home."${username}".langs = {
     go.enable = true;
     rust.enable = true;
   };

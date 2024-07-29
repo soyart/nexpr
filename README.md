@@ -8,11 +8,44 @@ Nexpr is organized into directories, namely
 
 - [nixos](./nixos/) and [home](./home/)
 
-  NixOS configuration modules (top-level is `nexpr`).
-  The top-level directory is not a rule, but more like a guideline:
-  all modules under [`nixos`](./nixos/) should not touch home-manager
-  or use any values from [`home`](./home/) modules, although home
-  modules might set system configurations.
+  NixOS configuration modules (top-level option is `nexpr`).
+
+  > Module locations do not follow struct rules, but more like a guideline:
+  >
+  > All modules under [`nixos`](./nixos/) should not touch home-manager
+  > or use any values from [`home`](./home/) modules, although home
+  > modules might set system configurations (e.g. fonts and sound, which
+  > are system-wide and are only configured if some *home* options are enabled),
+  > or a user's Firefox feature option which might enable some system options.
+
+  - [`./nixos`](./nixos/) -> `nexpr`
+
+    The modules here provide `nexpr` system options like networking, mountpoints,
+    and main user.
+
+    Per-host configurations should be consolidated into a single module
+    under [`./nixos/hosts`](./nixos/hosts/). Preferrably, these *hosts* modules should
+    not declare any options (i.e. they are `imports`-only modules).
+
+  - [`./home`](./home/) -> `nexpr.home.${username}` or `nexpr.home`
+
+    The modules here provide `nexpr.home` user options like program configurations,
+    user-specific packages, etc.
+
+    Some options under `./home/` may provide `nexpr.gui`
+    options (system-wide), like `nexpr.gui.sound` and `nexpr.gui.fonts`.
+    This is because home-manager does not directly provide options for such configurations.
+
+    ### User-specific options
+
+    Options under `nexpr.home` are user-specific. The per-user configuration
+    is implemented by simple, stupid functional module factories that takes
+    in a username and returns a user-specific nexpr modules under `nexpr.home.${username}`.
+
+    The options `nexpr.home.${username}` will then be mapped to `home-manager.users.${username}`.
+
+    Note that `home-manager.sharedModules` is not used because some modules here might need to set
+    system configurations too, usually low-level or security-related NixOS options.
 
 - [opinionated library](./libnexpr/)
 

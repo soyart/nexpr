@@ -1,9 +1,11 @@
+username:
+
 { ... }:
 
 {
   imports = [
-    ../../home/modules/progs/helix
+    (import ../../home/modules/progs/helix username)
   ];
 
-  nexpr.progs.helix.enable = true;
+  nexpr.home."${username}".progs.helix.enable = true;
 }

@@ -1,15 +1,18 @@
-{ lib, config, pkgs, username, ... }:
+username:
+
+{ lib, config, pkgs, ... }:
 
 with lib;
 with lib.types;
 
 let
-  cfg = config.nexpr.gui.progs.firefox;
-  cfgSway = config.nexpr.gui.progs.sway;
+  perUser = config.nexpr.home."${username}";
+  cfg = perUser.gui.progs.firefox;
+  cfgSway = perUser.gui.progs.sway;
 
 in {
   options = {
-    nexpr.gui.progs.firefox = {
+    nexpr.home."${username}".gui.progs.firefox = {
       enable = mkEnableOption "Enable Firefox (Wayland-only)";
       withPipewire = mkOption {
         description = "Enable Pipewire support in Firefox (i.e. for screen sharing and web conferences)";
@@ -20,7 +23,7 @@ in {
   };
 
   config = mkIf cfg.enable {
-    services.pipewire.enable = mkIf cfg.withPipewire true;
+    services.pipewire.enable = cfg.withPipewire;
 
     home-manager.users."${username}" = {
       home.sessionVariables = {

@@ -1,12 +1,14 @@
+username:
+
 { ... }:
 
 {
   imports = [
-    ../../defaults/bash.nix    
-    ../../defaults/devel
+    (import ../../defaults/bash.nix username)
+    (import ../../defaults/devel username)
 
-    ../../defaults/gui/sway.nix
-    ../../defaults/gui/fonts.nix
-    ../../defaults/gui/firefox.nix
+    (import ../../defaults/gui/sway.nix username)
+    (import ../../defaults/gui/fonts.nix username)
+    (import ../../defaults/gui/firefox.nix username)
   ];
 }
