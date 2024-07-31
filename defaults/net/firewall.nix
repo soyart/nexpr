@@ -2,7 +2,7 @@
 
 {
   imports = [
-    ../../nixos/modules/net/firewall.nix
+    ../../modules/nixos/net/firewall.nix
   ];
 
   nexpr.net.firewall = {

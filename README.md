@@ -4,37 +4,41 @@ Nix expressions and NixOS configurations
 
 ## Structure
 
-Nexpr is organized into directories, namely
+- [Nexpr modules](./modules/)
 
-- [nixos](./nixos/) and [home](./home/)
+  Modules in nexpr is put under 2 directories: [system module in `nixos`](./modules/nixos/)
+  and [user home module in `home`](./modules/home/).
 
-  NixOS configuration modules (top-level option is `nexpr`).
+  There's only 1 rule for modules: **a system module must never touch user home modules**.
 
-  > Module locations do not follow struct rules, but more like a guideline:
-  >
-  > All modules under [`nixos`](./nixos/) should not touch home-manager
-  > or use any values from [`home`](./home/) modules, although home
-  > modules might set system configurations (e.g. fonts and sound, which
-  > are system-wide and are only configured if some *home* options are enabled),
-  > or a user's Firefox feature option which might enable some system options.
+  > We allow home modules to read or even set values of system modules,
+  > or even `nixosConfigurations` itself, *if* that's the natural way to implement the home module.
 
-  - [`./nixos`](./nixos/) -> `nexpr`
+  - [System modules in `nixos`](./nixos/)
+  
+    The root of this module is the top-level `nexpr`
 
-    The modules here provide `nexpr` system options like networking, mountpoints,
+    The modules here provide nexpr system options like networking, mountpoints,
     and main user.
 
+    ### Host configurations
+    
     Per-host configurations should be consolidated into a single module
-    under [`./nixos/hosts`](./nixos/hosts/). Preferrably, these *hosts* modules should
-    not declare any options (i.e. they are `imports`-only modules).
+    under [`./modules/nixos/hosts`](./modules/nixos/hosts/).
+
+    Preferrably, these *hosts* modules should not declare any options (i.e.
+    they are `imports`-only modules), and they should not touch home modules.
+
+    This is because *hosts* are bare-minimum builds that can boot and connect
+    to the internet.
+
+    The way I like it is to use host configuration as the base, and build up from
+    there with modules and [presets](./presets/).
 
   - [`./home`](./home/) -> `nexpr.home.${username}` or `nexpr.home`
 
     The modules here provide `nexpr.home` user options like program configurations,
     user-specific packages, etc.
-
-    Some options under `./home/` may provide `nexpr.gui`
-    options (system-wide), like `nexpr.gui.sound` and `nexpr.gui.fonts`.
-    This is because home-manager does not directly provide options for such configurations.
 
     ### User-specific options
 
@@ -47,27 +51,28 @@ Nexpr is organized into directories, namely
     Note that `home-manager.sharedModules` is not used because some modules here might need to set
     system configurations too, usually low-level or security-related NixOS options.
 
-- [opinionated library](./libnexpr/)
+- [Library](./libnexpr/) (very opinionated)
 
   Simple (sometimes useless) non-module Nix code, usually functions.
 
-- [package lists](./packages/) in text files
+- [Package lists](./packages/)
 
-  List of package names to be imported by [syspkgs module](./nixos/modules/syspkgs.nix).
+  List of package names to be imported by [syspkgs module](./modules/nixos/syspkgs.nix).
 
-- [defaults](./defaults/)
+  Each text line is treated as pname of a Nix package.
 
-  Default, ready-to-go configuration modules for some high-level concepts or programs.
-  They provide no configurable options, and consumers are only expected to simply import
-  the defaults.
+- [Default settings](./defaults/)
 
-- [presets](./presets/)
+  Ready-to-go, import-only modules with no options defined.
 
-  High-level ready-to-go configuration modules. This is what we'd probably write to
-  extend `configuration.nix` and `hardware-configuration.nix`, i.e. our config.
+- [Presets and profiles](./presets/)
+
+  Like defaults, but more complex. An example is [`sway-dev`](./presets/sway-dev/),
+  which provides my working environment using Sway and Helix.
 
   Presets usually cover everything but the boot process or hardware settings.
+
   Lower-level, machine-specific configuration like the boot process, mountpoints,
-  and kernel settings should be defined in `hosts/<host>`.
+  and kernel settings should be defined in `hosts/<host>/default.nix`.
 
   Like with defaults, they provide no options.

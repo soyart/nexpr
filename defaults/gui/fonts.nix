@@ -1,10 +1,11 @@
-username:
+# Ignore username, since fonts is system-wide
+_:
 
 { pkgs, ... }:
 
 {
   imports = [
-    ../../home/modules/gui/fonts.nix
+    ../../modules/home/gui/fonts.nix
   ];
 
   nexpr.gui.fonts = {

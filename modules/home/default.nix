@@ -29,7 +29,7 @@ in {
         };
       })
 
-      (import ../presets/sway-dev username)
+      (import ../../presets/sway-dev username)
     ];
   };
 }

@@ -46,7 +46,7 @@ in {
       ./hosts/t14
       withDefaultHomeManager
 
-      (import ../presets/sway-dev "artnoi")
+      (import ../../presets/sway-dev "artnoi")
     ];
   };
 }
