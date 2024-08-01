@@ -4,7 +4,7 @@ with lib;
 with lib.types;
 
 let
-  cfg = config.nexpr.net.firewall;
+  cfg = config.los.net.firewall;
 
   fw = {
     options = {
@@ -30,8 +30,8 @@ let
 
 in
 {
-  options.nexpr.net.firewall = {
-    enable = mkEnableOption "Enable nexpr firewall";
+  options.los.net.firewall = {
+    enable = mkEnableOption "Enable los firewall";
     global = mkOption {
       description = "Global firewall for all network interfaces";
       type = submodule fw;
@@ -39,7 +39,7 @@ in
     };
 
     # interfaces = mkOption {
-    #   description = "Maps names of interfaces to nexpr firewall";
+    #   description = "Maps names of interfaces to los firewall";
     #   type = attrsOf (submodule fw);
     #   default = {};
     # };

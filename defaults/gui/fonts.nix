@@ -4,10 +4,10 @@ username:
 
 {
   imports = [
-    (import ../../modules/home/gui/fonts.nix username)
+    (import ../../los/home/gui/fonts.nix username)
   ];
 
-  nexpr.home."${username}".gui.fonts = {
+  los.home."${username}".gui.fonts = {
     enable = true;
 
     ttf = with pkgs; [

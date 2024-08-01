@@ -4,10 +4,10 @@ with lib;
 with lib.types;
 
 let
-  cfg = config.nexpr.ramDisks;
+  cfg = config.los.ramDisks;
 
 in {
-  options.nexpr.ramDisks = mkOption {
+  options.los.ramDisks = mkOption {
     description = "Set of tmpfs mounts";
     type = attrsOf (submodule {
       options = {

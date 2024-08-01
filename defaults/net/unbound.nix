@@ -2,10 +2,10 @@
 
 {
   imports = [
-    ../../modules/nixos/net/unbound.nix
+    ../../los/nixos/net/unbound.nix
   ];
 
-  nexpr.net.unboundDoT = {
+  los.net.unboundDoT = {
     enable = true;
     nameserversDoT = [
       "1.1.1.1@853#one.one.one.one"

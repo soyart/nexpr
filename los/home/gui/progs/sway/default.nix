@@ -5,13 +5,13 @@ username:
 with lib;
 
 let
-  cfg = config.nexpr.home."${username}".gui.progs.sway;
+  cfg = config.los.home."${username}".gui.progs.sway;
 
   unix = inputs.unix;
 
 in {
   options = {
-    nexpr.home."${username}".gui.progs.sway = {
+    los.home."${username}".gui.progs.sway = {
       enable = mkEnableOption "Enable Sway DM with config from gitlab.com/artnoi/unix";
     };
   };

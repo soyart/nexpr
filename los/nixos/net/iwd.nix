@@ -4,10 +4,10 @@ with lib;
 with lib.types;
 
 let
-  cfg = config.nexpr.net.iwd;
+  cfg = config.los.net.iwd;
 
 in {
-  options.nexpr.net.iwd = {
+  options.los.net.iwd = {
     enable =  mkEnableOption "Enable iwd wireless daemon";
   };
 

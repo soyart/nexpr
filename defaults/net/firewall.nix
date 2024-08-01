@@ -2,10 +2,10 @@
 
 {
   imports = [
-    ../../modules/nixos/net/firewall.nix
+    ../../los/nixos/net/firewall.nix
   ];
 
-  nexpr.net.firewall = {
+  los.net.firewall = {
     enable = true;
     global = {
       allowPing = false;

@@ -4,10 +4,10 @@ with lib;
 with lib.types;
 
 let
-  cfg = config.nexpr.doas;
+  cfg = config.los.doas;
 
 in {
-  options.nexpr.doas = {
+  options.los.doas = {
     enable = mkEnableOption "Globally enable doas";
 
     keepSudo = mkOption {
