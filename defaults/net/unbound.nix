@@ -2,7 +2,7 @@
 
 {
   imports = [
-    ../../nixos/modules/net/unbound.nix
+    ../../modules/nixos/net/unbound.nix
   ];
 
   nexpr.net.unboundDoT = {

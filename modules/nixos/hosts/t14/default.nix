@@ -5,14 +5,14 @@
       ./hardware.nix
       ./configuration.nix
 
-      ../../../defaults/nix
-      ../../../defaults/net
+      ../../../../defaults/nix
+      ../../../../defaults/net
 
-      ../../modules/net
-      ../../modules/syspkgs.nix
-      ../../modules/main-user.nix
-      ../../modules/doas.nix # doas is considered a system setting
-      ../../modules/ramdisk.nix
+      ../../net
+      ../../syspkgs.nix
+      ../../main-user.nix
+      ../../doas.nix # doas is considered a system setting
+      ../../ramdisk.nix
   ];
 
   networking.hostName = hostname;
@@ -74,11 +74,11 @@
     };
 
     syspkgs = [
-      ../../../packages/base
-      ../../../packages/devel
-      ../../../packages/net
-      ../../../packages/laptop
-      ../../../packages/nix-extras
+      ../../../../packages/base
+      ../../../../packages/devel
+      ../../../../packages/net
+      ../../../../packages/laptop
+      ../../../../packages/nix-extras
     ];
   };
 

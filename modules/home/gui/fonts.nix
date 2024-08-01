@@ -1,14 +1,16 @@
+username:
+
 { lib, config, pkgs, ... }:
 
 with lib;
 with lib.types;
 
 let
-  cfg = config.nexpr.gui.fonts;
+  cfg = config.nexpr.home."${username}".gui.fonts;
 
 in {
   options = {
-    nexpr.gui.fonts = {
+    nexpr.home."${username}".gui.fonts = {
       enable = mkEnableOption "Install fonts for GUI";
 
       ttf = mkOption {
@@ -55,18 +57,20 @@ in {
   };
 
   config = mkIf cfg.enable {
-    fonts = {
-      packages =
-        if (builtins.length cfg.nerd != 0)
-        then cfg.ttf ++ [
-          (pkgs.nerdfonts.override { fonts = cfg.nerd; })
-        ]
+    home-manager.users."${username}" = {
+      home.packages =
+          if (builtins.length cfg.nerd != 0)
+          then cfg.ttf ++ [
+            (pkgs.nerdfonts.override { fonts = cfg.nerd; })
+          ]
 
-        else cfg.ttf;
+          else cfg.ttf;
 
-      fontconfig = mkIf (cfg.defaults != null) {
-        enable = true;
-        defaultFonts = cfg.defaults;
+      fonts = {
+        fontconfig = mkIf (cfg.defaults != null) {
+          enable = true;
+          defaultFonts = cfg.defaults;
+        };
       };
     };
   };

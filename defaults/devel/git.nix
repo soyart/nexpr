@@ -4,7 +4,7 @@ username:
 
 {
   imports = [
-    (import ../../home/modules/progs/git username)
+    (import ../../modules/home/progs/git username)
   ];
 
   nexpr.home."${username}".progs.git = {

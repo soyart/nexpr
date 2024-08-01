@@ -4,7 +4,7 @@ username:
 
 {
   imports = [
-    (import ../../home/modules/langs username)
+    (import ../../modules/home/langs username)
   ];
 
   nexpr.home."${username}".langs = {

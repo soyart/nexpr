@@ -2,8 +2,8 @@
   description = "NixOS configuration";
 
   outputs = { ... }@inputs: {
-    homeConfigurations = import ./home { inherit inputs; };
-    nixosConfigurations = import ./nixos { inherit inputs; };
+    homeConfigurations = import ./modules/home { inherit inputs; };
+    nixosConfigurations = import ./modules/nixos { inherit inputs; };
   };
 
   inputs = {
