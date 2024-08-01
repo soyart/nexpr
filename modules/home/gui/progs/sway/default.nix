@@ -10,10 +10,6 @@ let
   unix = inputs.unix;
 
 in {
-  imports = [
-    ../../sound.nix    
-  ];
-
   options = {
     nexpr.home."${username}".gui.progs.sway = {
       enable = mkEnableOption "Enable Sway DM with config from gitlab.com/artnoi/unix";
@@ -23,7 +19,15 @@ in {
   config = mkIf cfg.enable {
     security = {
       polkit.enable = true;
+      rtkit.enable = true;
       pam.services.swaylock = {};
+    };
+
+    services.pipewire = {
+      enable = true;
+
+      pulse.enable = true; # Emulate PulseAudio
+      alsa.enable = true;
     };
 
     users.users."${username}" = {
