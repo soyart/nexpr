@@ -38,7 +38,7 @@ let
   };
 
 in {
-  "nexpr-t14" = mkHost {
+  "los-t14" = mkHost {
     hostname = "los-t14";
     mainUser = "artnoi";
 
