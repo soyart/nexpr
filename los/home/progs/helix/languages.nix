@@ -47,6 +47,9 @@
     {
       name = "nix";
       auto-format = true;
+      roots = [
+        "flake.nix"
+      ];
       language-servers = [
         {
           name = "nixd";
