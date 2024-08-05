@@ -13,10 +13,17 @@ in {
       extensions = lib.mkOption {
         type = types.listOf types.package;
 
+        example = with pkgs.vscode-extensions; [
+          golang.go
+          jnoortheen.nix-ide
+          rust-lang.rust-analyzer
+        ];
+
         # https://search.nixos.org/packages?channel=24.05&from=0&size=50&sort=relevance&type=packages&query=vscode-extensions
         default = with pkgs.vscode-extensions; [
           golang.go
           jnoortheen.nix-ide
+          rust-lang.rust-analyzer
         ];
       };
     };   
@@ -26,7 +33,8 @@ in {
     home-manager.users."${username}" = {
       programs.vscode = {
         enable = true;
-        package = pkgs.vscodium;
+        # package = pkgs.vscodium;
+        package = pkgs.vscodium.fhs; # With normal FHS-style chroot
         extensions = cfg.extensions;
       };
     };

@@ -21,7 +21,7 @@ let
 
   mod = {
     options = {
-      enable = lib.mkEnableOption "Enable language support";
+      enable = lib.mkEnableOption "Enable language support (home-manager)";
       systemPackage = lib.mkEnableOption "Enable language support as system package";
     };
   };
