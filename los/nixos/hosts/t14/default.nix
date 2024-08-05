@@ -42,7 +42,7 @@
     };
   };
 
-  nexpr = {
+  los = {
     ramDisks = {
       "/tmp" = {
         group = "wheel";

@@ -6,12 +6,12 @@ with lib;
 with lib.types;
 
 let
-  cfg = config.nexpr.home."${username}".progs.git;
+  cfg = config.los.home."${username}".progs.git;
 
 in {
   options = {
-    nexpr.home."${username}".progs.git = {
-      enable = mkEnableOption "Enable nexpr Git";
+    los.home."${username}".progs.git = {
+      enable = mkEnableOption "Enable los Git";
 
       withLfs = mkOption {
         description = "Enable Git LFS support";

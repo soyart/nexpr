@@ -4,10 +4,10 @@ with lib;
 with lib.types;
 
 let
-  cfg = config.nexpr.mainUser;
+  cfg = config.los.mainUser;
 
 in {
-  options.nexpr.mainUser = {
+  options.los.mainUser = {
     enable = mkEnableOption "Enable mainUser module";
 
     username= mkOption {
@@ -15,7 +15,7 @@ in {
       type = str // {
         check = (s: s != "root");
       };
-      default = "nexpr";
+      default = "los";
       example = "bob";
     };
 

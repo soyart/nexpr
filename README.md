@@ -1,13 +1,16 @@
-# nexpr
+# los
 
-Nix expressions and NixOS configurations
+los is short for L OS. It's provides Nix flake, modules, and library for
+building my personal NixOS setup.
+
+L in los is undefined, and could be last, light, or even loser.
 
 ## Structure
 
-- [Nexpr modules](./modules/)
+- [los modules](./los/)
 
-  Modules in nexpr is put under 2 directories: [system module in `nixos`](./modules/nixos/)
-  and [user home module in `home`](./modules/home/).
+  Modules in los is put under 2 directories: [system module in `nixos`](./los/nixos/)
+  and [user home module in `home`](./los/home/).
 
   There's only 1 rule for modules: **a system module must never touch user home modules**.
 
@@ -16,15 +19,15 @@ Nix expressions and NixOS configurations
 
   - [System modules in `nixos`](./nixos/)
   
-    The root of this module is the top-level `nexpr`
+    The root of this module is the top-level `los`
 
-    The modules here provide nexpr system options like networking, mountpoints,
+    The modules here provide los system options like networking, mountpoints,
     and main user.
 
     ### Host configurations
     
     Per-host configurations should be consolidated into a single module
-    under [`./modules/nixos/hosts`](./modules/nixos/hosts/).
+    under [`./los/nixos/hosts`](./los/nixos/hosts/).
 
     Preferrably, these *hosts* modules should not declare any options (i.e.
     they are `imports`-only modules), and they should not touch home modules.
@@ -35,29 +38,29 @@ Nix expressions and NixOS configurations
     The way I like it is to use host configuration as the base, and build up from
     there with modules and [presets](./presets/).
 
-  - [`./home`](./home/) -> `nexpr.home.${username}` or `nexpr.home`
+  - [`./home`](./home/) -> `los.home.${username}` or `los.home`
 
-    The modules here provide `nexpr.home` user options like program configurations,
+    The modules here provide `los.home` user options like program configurations,
     user-specific packages, etc.
 
     ### User-specific options
 
-    Options under `nexpr.home` are user-specific. The per-user configuration
+    Options under `los.home` are user-specific. The per-user configuration
     is implemented by simple, stupid functional module factories that takes
-    in a username and returns a user-specific nexpr modules under `nexpr.home.${username}`.
+    in a username and returns a user-specific los modules under `los.home.${username}`.
 
-    The options `nexpr.home.${username}` will then be mapped to `home-manager.users.${username}`.
+    The options `los.home.${username}` will then be mapped to `home-manager.users.${username}`.
 
     Note that `home-manager.sharedModules` is not used because some modules here might need to set
     system configurations too, usually low-level or security-related NixOS options.
 
-- [Library](./libnexpr/) (very opinionated)
+- [Library](./liblos/) (very opinionated)
 
   Simple (sometimes useless) non-module Nix code, usually functions.
 
 - [Package lists](./packages/)
 
-  List of package names to be imported by [syspkgs module](./modules/nixos/syspkgs.nix).
+  List of package names to be imported by [syspkgs module](./los/nixos/syspkgs.nix).
 
   Each text line is treated as pname of a Nix package.
 

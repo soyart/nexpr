@@ -4,8 +4,8 @@ username:
 
 {
   imports = [
-    (import ../../modules/home/progs/helix username)
+    (import ../../los/home/progs/helix username)
   ];
 
-  nexpr.home."${username}".progs.helix.enable = true;
+  los.home."${username}".progs.helix.enable = true;
 }

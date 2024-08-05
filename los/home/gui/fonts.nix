@@ -6,11 +6,11 @@ with lib;
 with lib.types;
 
 let
-  cfg = config.nexpr.home."${username}".gui.fonts;
+  cfg = config.los.home."${username}".gui.fonts;
 
 in {
   options = {
-    nexpr.home."${username}".gui.fonts = {
+    los.home."${username}".gui.fonts = {
       enable = mkEnableOption "Install fonts for GUI";
 
       ttf = mkOption {

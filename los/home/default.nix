@@ -18,7 +18,7 @@ let
     extraSpecialArgs = { inherit inputs username stateVersion; };
   };
 in {
-  "artnoi@nexpr-t14" = mkHome rec {
+  "artnoi@los-t14" = mkHome rec {
     username = "artnoi";
     modules = [
       ({ inputs, config, ... }: {

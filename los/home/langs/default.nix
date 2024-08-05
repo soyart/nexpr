@@ -6,7 +6,7 @@ with lib;
 with lib.types;
 
 let
-  cfg = config.nexpr.home."${username}".langs;
+  cfg = config.los.home."${username}".langs;
 
   mappings = {
     go = with pkgs; [
@@ -60,7 +60,7 @@ let
   );
 
 in {
-  options.nexpr.home."${username}".langs = mkOption {
+  options.los.home."${username}".langs = mkOption {
     description = "Programming languages to install";
     type = attrsOf (submodule mod);
     default = {

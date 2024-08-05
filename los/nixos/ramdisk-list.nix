@@ -4,10 +4,10 @@ with lib;
 with lib.types;
 
 let
-    cfg = config.nexpr.ramDiskList;
+    cfg = config.los.ramDiskList;
 
 in {
-  options.nexpr.ramDiskList = mkOption {
+  options.los.ramDiskList = mkOption {
     description = "List of tmpfs mounts";
     type = listOf (submodule {
       options = {

@@ -4,8 +4,8 @@ username:
 
 {
   imports = [
-    (import ../../modules/home/gui/progs/sway username)
+    (import ../../los/home/gui/progs/sway username)
   ];
 
-  nexpr.home."${username}".gui.progs.sway.enable = true;
+  los.home."${username}".gui.progs.sway.enable = true;
 }

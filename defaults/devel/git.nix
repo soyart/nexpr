@@ -4,10 +4,10 @@ username:
 
 {
   imports = [
-    (import ../../modules/home/progs/git username)
+    (import ../../los/home/progs/git username)
   ];
 
-  nexpr.home."${username}".progs.git = {
+  los.home."${username}".progs.git = {
     enable = true;
     withLfs = false;
     username = "soyart";  

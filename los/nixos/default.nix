@@ -8,7 +8,7 @@ let
   mkHost = {
     modules,
     mainUser,
-    hostname ? "nexpr",
+    hostname ? "los",
     stateVersion ? "23.11",
     system ? "x86_64-linux",
     # disk ? ./disks/thinkpad.nix,
@@ -38,8 +38,8 @@ let
   };
 
 in {
-  "nexpr-t14" = mkHost {
-    hostname = "nexpr-t14";
+  "los-t14" = mkHost {
+    hostname = "los-t14";
     mainUser = "artnoi";
 
     modules = [

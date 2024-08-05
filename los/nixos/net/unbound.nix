@@ -4,10 +4,10 @@ with lib;
 with lib.types;
 
 let
-  cfg = config.nexpr.net.unboundDoT;
+  cfg = config.los.net.unboundDoT;
 
 in {
-  options.nexpr.net.unboundDoT = {
+  options.los.net.unboundDoT = {
     enable = mkEnableOption "Enable DNS-over-TLS with unbound";
     nameserversDoT= mkOption {
       type = listOf str // {
