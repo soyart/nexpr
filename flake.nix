@@ -17,7 +17,7 @@
       type = "gitlab";
       owner = "artnoi";
       repo = "unix";
-      ref = "tmp/sndctl";
+      ref = "master";
       flake = false;
     };
   };

@@ -63,16 +63,16 @@
     "unix": {
       "flake": false,
       "locked": {
-        "lastModified": 1721240180,
-        "narHash": "sha256-C5e04YEBiITTkah4V+I/B4qKqFkjXkU6DFQO7e+VbK4=",
+        "lastModified": 1722870507,
+        "narHash": "sha256-iU5F9Zza+dRpXJVa+puF64Uy3+UElLhGmgQEgmEJBQs=",
         "owner": "artnoi",
         "repo": "unix",
-        "rev": "9f05975c70e4e7274cece0d4ac6a4002dd0034ee",
+        "rev": "f8e06bfcd9fb89bc2dd4fa8c86576c21d795557c",
         "type": "gitlab"
       },
       "original": {
         "owner": "artnoi",
-        "ref": "tmp/sndctl",
+        "ref": "master",
         "repo": "unix",
         "type": "gitlab"
       }
