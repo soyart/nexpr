@@ -25,7 +25,7 @@ let
 
   # Imports home-manager as NixOS modules,
   # and with defaults home-manager.home config.
-  withDefaultHomeManager = { inputs, config, ... }: {
+  withDefaultHomeManager = { inputs, ... }: {
     imports = [
       inputs.home-manager.nixosModules.home-manager
     ];

@@ -2,10 +2,8 @@ username:
 
 { lib, config, pkgs, ... }:
 
-with lib;
-with lib.types;
-
 let
+  types = lib.types;
   cfg = config.los.home."${username}".langs;
 
   mappings = {
@@ -23,8 +21,8 @@ let
 
   mod = {
     options = {
-      enable = mkEnableOption "Enable language support";
-      systemPackage = mkEnableOption "Enable language support as system package";
+      enable = lib.mkEnableOption "Enable language support";
+      systemPackage = lib.mkEnableOption "Enable language support as system package";
     };
   };
 
@@ -38,7 +36,7 @@ let
   # [ {name=go; enable=true; systemPackage=true}; {name=rust; enable=true; systemPackage=true;} ]
   #
   langList = (langCfgs:
-    mapAttrsToList
+    lib.mapAttrsToList
       (key: val: val // { name = key; })
     langCfgs
   );
@@ -60,9 +58,9 @@ let
   );
 
 in {
-  options.los.home."${username}".langs = mkOption {
+  options.los.home."${username}".langs = lib.mkOption {
     description = "Programming languages to install";
-    type = attrsOf (submodule mod);
+    type = types.attrsOf (types.submodule mod);
     default = {
       enable = false;
       systemPackage = false;
@@ -75,9 +73,9 @@ in {
 
   in {
     environment.systemPackages =
-      lists.flatten (sysPkgs languages);
+      lib.lists.flatten (sysPkgs languages);
 
     home-manager.users."${username}".home.packages =
-      lists.flatten (homePkgs languages);
+      lib.lists.flatten (homePkgs languages);
   };
 }

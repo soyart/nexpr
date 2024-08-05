@@ -2,46 +2,44 @@ username:
 
 { lib, pkgs, config, hostname, ... }:
 
-with lib;
-with lib.types;
-
 let
+  types = lib.types;
   cfg = config.los.home."${username}".progs.git;
 
 in {
   options = {
     los.home."${username}".progs.git = {
-      enable = mkEnableOption "Enable los Git";
+      enable = lib.mkEnableOption "Enable los Git";
 
-      withLfs = mkOption {
+      withLfs = lib.mkOption {
         description = "Enable Git LFS support";
-        type = bool;
+        type = types.bool;
         default = false;
       };
 
-      username = mkOption {
+      username = lib.mkOption {
         description = "Git username";
-        type = str;
+        type = types.str;
         default = username;
       };
 
-      email = mkOption {
+      email = lib.mkOption {
         description = "Git email";
-        type = str;
+        type = types.str;
         default = "${username}@${hostname}";
       };
 
-      editor = mkOption {
-        type = submodule {
-          options.package = mkOption {
+      editor = lib.mkOption {
+        type = types.submodule {
+          options.package = lib.mkOption {
             description = "Nix package to for git $EDITOR program";
-            type = package;
+            type = types.package;
             default = pkgs.helix;
           };
 
-          options.binPath = mkOption {
+          options.binPath = lib.mkOption {
             description = "Path to executable from the derivation root of package";
-            type = str // {
+            type = types.str // {
               check = (s: (builtins.stringLength s) != 0);
             };
             default = "bin/hx";
@@ -51,7 +49,7 @@ in {
     };
   };
 
-  config = (mkIf cfg.enable) {
+  config = (lib.mkIf cfg.enable) {
     home-manager.users."${username}" =
       let editor = cfg.editor;
 
