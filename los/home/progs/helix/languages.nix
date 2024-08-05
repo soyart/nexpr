@@ -1,16 +1,18 @@
-{ pkgs }:
-
 {
   language-server = {
+    nixd = {
+      command = "nixd";
+    };
+
     efm = {
-      command = "${pkgs.efm-langserver}/bin/efm-langserver";      
+      command = "efm-langserver";
       args = [
         "-loglevel" "10" "-logfile" "/tmp/helix.efm.log"
       ];
     };
 
     gopls = {
-      command = "${pkgs.gopls}/bin/gopls";
+      command = "gopls";
       buildTags = [
         "-tags=integration_test,dynamic,wireinject"
         "-v"
@@ -43,6 +45,16 @@
 
   language = [
     {
+      name = "nix";
+      auto-format = true;
+      language-servers = [
+        {
+          name = "nixd";
+        }
+      ];
+    }
+
+    {
       name = "go";
       auto-format = true;
       language-servers = [
@@ -53,6 +65,7 @@
         { name = "gopls"; }
       ];
     }
+
     {
       name = "rust";
       auto-format = true;
@@ -61,6 +74,7 @@
         unit = "\t";
       };
     }
+
     {
       name = "python";
       auto-format = true;

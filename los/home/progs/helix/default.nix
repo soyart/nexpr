@@ -16,10 +16,10 @@ in {
         description = "List of LSP Nix packages only available to Helix";
         type = listOf package;
         default = with pkgs; [
-          nil
+          nixd
         ];
         example = with pkgs; [
-          nil
+          nixd
           gopls
           marksman
         ];
@@ -41,7 +41,7 @@ in {
           keys = import ./keys.nix;
         };
 
-        languages = import ./languages.nix { inherit pkgs; };
+        languages = import ./languages.nix;
       };
     };
   };
