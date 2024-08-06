@@ -25,7 +25,7 @@ let
 
   # Imports home-manager as NixOS modules,
   # and with defaults home-manager.home config.
-  withDefaultHomeManager = { inputs, config, ... }: {
+  withDefaultHomeManager = { inputs, ... }: {
     imports = [
       inputs.home-manager.nixosModules.home-manager
     ];
@@ -38,15 +38,18 @@ let
   };
 
 in {
-  "los-t14" = mkHost {
-    hostname = "los-t14";
-    mainUser = "artnoi";
+  "los-t14" =
+    let username = "artnoi";
+    in mkHost {
+      hostname = "los-t14";
+      mainUser = username;
 
-    modules = [
-      ./hosts/t14
-      withDefaultHomeManager
+      modules = [
+        ./hosts/t14
+        withDefaultHomeManager
 
-      (import ../../presets/sway-dev "artnoi")
-    ];
+        (import ../../presets/sway-dev username)
+        (import ../../defaults/devel-gui/vscodium.nix username)
+      ];
   };
 }

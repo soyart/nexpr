@@ -1,21 +1,33 @@
 { lib, config, ... }:
 
-with lib;
-with lib.types;
-
 let
-    cfg = config.los.ramDiskList;
+  types = lib.types;
+  cfg = config.los.ramDiskList;
 
 in {
-  options.los.ramDiskList = mkOption {
+  options.los.ramDiskList = lib.mkOption{
     description = "List of tmpfs mounts";
-    type = listOf (submodule {
+    type = types.listOf (types.submodule {
       options = {
-        mnt = mkOption { type = str; };
-        perm = mkOption { type = str; default = "755"; };
-        owner = mkOption { type = str; default = "root"; };
-        group = mkOption { type = str; default = "root"; };
-        size = mkOption { type = nullOr str; default = null; };
+        mnt = lib.mkOption{
+          type = types.str;
+        };
+        perm = lib.mkOption{
+          type = types.str;
+          default = "755";
+        };
+        owner = lib.mkOption{
+          type = types.str;
+          default = "root";
+        };
+        group = lib.mkOption{
+          type = types.str;
+          default = "root";
+        };
+        size = lib.mkOption{
+          type = types.nullOr types.str;
+          default = null;
+        };
       };
     });
     example = [
@@ -32,15 +44,15 @@ in {
         fsType = "tmpfs";
         options = [
           "defaults"
-          "mode=${value.perm}"
-          "uid=${value.owner}"
-          "gid=${value.group}"
+          "mode=${cfg.perm}"
+          "uid=${cfg.owner}"
+          "gid=${cfg.group}"
         ]
-        ++ lib.optional (value.size != null) "size=${value.size}";
+        ++ lib.optional (cfg.size != null) "size=${cfg.size}";
       };
     };
     
     in {
-      fileSystems = attrsets.mergeAttrsList (map mapFn cfg);
+      fileSystems = lib.attrsets.mergeAttrsList (map mapFn cfg);
     };
 }

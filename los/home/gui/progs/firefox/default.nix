@@ -2,10 +2,9 @@ username:
 
 { lib, config, pkgs, ... }:
 
-with lib;
-with lib.types;
-
 let
+  types = lib.types;
+
   perUser = config.los.home."${username}";
   cfg = perUser.gui.progs.firefox;
   cfgSway = perUser.gui.progs.sway;
@@ -13,23 +12,23 @@ let
 in {
   options = {
     los.home."${username}".gui.progs.firefox = {
-      enable = mkEnableOption "Enable Firefox (Wayland-only)";
-      withPipewire = mkOption {
+      enable = lib.mkEnableOption "Enable Firefox (Wayland-only)";
+      withPipewire = lib.mkOption {
         description = "Enable Pipewire support in Firefox (i.e. for screen sharing and web conferences)";
-        type = bool;
+        type = types.bool;
         default = false;
       };
     };
   };
 
-  config = mkIf cfg.enable {
+  config = lib.mkIf cfg.enable {
     services.pipewire.enable = cfg.withPipewire;
 
     home-manager.users."${username}" = {
       home.sessionVariables = {
         BROWSER = "firefox";
         MOZ_ENABLE_WAYLAND = "1";
-        XDG_CURRENT_DESKTOP = mkIf cfgSway.enable "sway";
+        XDG_CURRENT_DESKTOP = lib.mkIf cfgSway.enable "sway";
       };
 
       xdg.portal = {
